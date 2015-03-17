@@ -1,0 +1,3 @@
+// Hello world program for Instat
+print "hello world";
+show #helloworld;
