@@ -17,7 +17,7 @@ literals = [';']
 
 # Tokens
 
-t_STRING = r'\"([^”]|\n)*\"'
+t_STRING = r'\"([^"]|\n)*\"'
 t_HASHTAG = r'\#[a-zA-Z0-9_][a-zA-Z0-9_]*'
 
 
