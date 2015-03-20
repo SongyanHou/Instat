@@ -50,6 +50,7 @@ def t_error(t):
 import ply.lex as lex
 lexer = lex.lex()
 
+# Parsing rules
 
 def p_statement_print(p):
     'statement : PRINT expression ;'
