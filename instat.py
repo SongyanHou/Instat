@@ -1,5 +1,3 @@
-__author__ = 'Jane'
-
 import sys
 sys.path.insert(0,"../..")
 
@@ -11,7 +9,7 @@ reserved = {
     'show': 'SHOW'
 }
 
-tokens = ['STRING', 'HASHTAG', 'ID'] + list(reserved.values())
+tokens = ['NUMBER', 'STRING', 'HASHTAG', 'ID'] + list(reserved.values())
 
 literals = [';']
 
@@ -24,6 +22,16 @@ t_HASHTAG = r'\#[a-zA-Z0-9_][a-zA-Z0-9_]*'
 def t_ID(t):
     r'[a-zA-Z_][a-zA-Z_0-9]*'
     t.type = reserved.get(t.value, 'ID')    # Check for reserved words
+    return t
+
+
+def t_NUMBER(t):
+    r'\d+'
+    try:
+        t.value = int(t.value)
+    except ValueError:
+        print "Integer value too large", t.value
+        t.value = 0
     return t
 
 
@@ -42,27 +50,15 @@ def t_error(t):
 import ply.lex as lex
 lexer = lex.lex()
 
-# Test it out
-#data = '''
-#// Hello world program for Instat
-#print "hello world";
-#show #helloworld;
-#'''
 
-# Give the lexer some input
-#lexer.input(data)
-
-# Tokenize
-#while True:
-#    tok = lexer.token()
-#    if not tok:
-#        break      # No more input
-#    print tok
-
-
-def p_print_stmt(p):
-    'print_stmt : PRINT STRING ;'
+def p_statement_print(p):
+    'statement : PRINT expression ;'
     print p[2]
+
+
+def p_expression_string(p):
+    'expression : STRING'
+    p[0] = p[1]
 
 
 def p_error(p):
