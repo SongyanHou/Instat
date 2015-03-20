@@ -20,14 +20,13 @@ reserved = {
     'show': 'SHOW'
 }
 
-tokens = ['NUMBER', 'STRING', 'HASHTAG', 'ID', 'NEWLINE'] + list(reserved.values())
-
-literals = [';']
+tokens = ['NUMBER', 'STRING', 'HASHTAG', 'ID', 'SEMICOLON', 'NEWLINE'] + list(reserved.values())
 
 # Tokens
 
 t_STRING = r'\"([^"]|\n)*\"'
 t_HASHTAG = r'\#[a-zA-Z0-9_][a-zA-Z0-9_]*'
+t_SEMICOLON = r';'
 
 
 def t_ID(t):
@@ -55,7 +54,6 @@ def t_newline(t):
     r'\n+'
     t.lexer.lineno += len(t.value)
     t.type = 'NEWLINE'
-    return t
 
 t_ignore = r' \t'
 
@@ -69,6 +67,11 @@ import ply.lex as lex
 lexer = lex.lex(debug=True, debuglog=log)
 
 # Parsing rules
+
+def p_program(p):
+    '''program : program statement
+               | statement'''
+    pass
 
 
 def p_statement_print(p):
@@ -94,7 +97,7 @@ def p_hashtag(p):
 
 
 def p_end(p):
-    'end : NEWLINE'
+    'end : SEMICOLON'
     p[0] = None
 
 
@@ -109,8 +112,8 @@ parser = yacc.yacc(debug=True, debuglog=log)
 
 data = '''
 // Hello world program for Instat
-print "hello world"
-show #helloworld
+print "hello world";
+show #helloworld;
 '''
 
 yacc.parse(data, debug=log)

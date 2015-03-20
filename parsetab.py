@@ -5,9 +5,9 @@ _tabversion = '3.2'
 
 _lr_method = 'LALR'
 
-_lr_signature = '&I\\]g\t`\xc4\xd9`\x9f\x1c{\xfcf\x12'
+_lr_signature = 'LiN\xc8\x0c*v\xf3-O\x183\x1c\xc0\xbd\xc8'
     
-_lr_action_items = {'STRING':([3,],[7,]),'SHOW':([0,],[1,]),'NEWLINE':([4,5,6,7,],[8,-4,8,-3,]),'HASHTAG':([1,],[5,]),'PRINT':([0,],[3,]),'$end':([2,8,9,10,],[0,-5,-2,-1,]),}
+_lr_action_items = {'STRING':([4,],[9,]),'SEMICOLON':([5,6,8,9,],[11,-6,11,-5,]),'SHOW':([0,2,3,7,10,11,12,],[1,1,-2,-1,-4,-7,-3,]),'HASHTAG':([1,],[6,]),'PRINT':([0,2,3,7,10,11,12,],[4,4,-2,-1,-4,-7,-3,]),'$end':([2,3,7,10,11,12,],[0,-2,-1,-4,-7,-3,]),}
 
 _lr_action = { }
 for _k, _v in _lr_action_items.items():
@@ -16,7 +16,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'end':([4,6,],[9,10,]),'string':([3,],[6,]),'statement':([0,],[2,]),'hashtag':([1,],[4,]),}
+_lr_goto_items = {'program':([0,],[2,]),'end':([5,8,],[10,12,]),'string':([4,],[8,]),'statement':([0,2,],[3,7,]),'hashtag':([1,],[5,]),}
 
 _lr_goto = { }
 for _k, _v in _lr_goto_items.items():
@@ -25,10 +25,12 @@ for _k, _v in _lr_goto_items.items():
        _lr_goto[_x][_k] = _y
 del _lr_goto_items
 _lr_productions = [
-  ("S' -> statement","S'",1,None,None,None),
-  ('statement -> PRINT string end','statement',3,'p_statement_print','instat.py',65),
-  ('statement -> SHOW hashtag end','statement',3,'p_statement_show','instat.py',71),
-  ('string -> STRING','string',1,'p_string','instat.py',77),
-  ('hashtag -> HASHTAG','hashtag',1,'p_hashtag','instat.py',82),
-  ('end -> NEWLINE','end',1,'p_end','instat.py',87),
+  ("S' -> program","S'",1,None,None,None),
+  ('program -> program statement','program',2,'p_program','instat.py',73),
+  ('program -> statement','program',1,'p_program','instat.py',74),
+  ('statement -> PRINT string end','statement',3,'p_statement_print','instat.py',79),
+  ('statement -> SHOW hashtag end','statement',3,'p_statement_show','instat.py',85),
+  ('string -> STRING','string',1,'p_string','instat.py',91),
+  ('hashtag -> HASHTAG','hashtag',1,'p_hashtag','instat.py',96),
+  ('end -> SEMICOLON','end',1,'p_end','instat.py',101),
 ]
