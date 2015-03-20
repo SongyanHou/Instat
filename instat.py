@@ -1,3 +1,4 @@
+from show import show
 import sys
 sys.path.insert(0,"../..")
 
@@ -9,7 +10,7 @@ reserved = {
     'show': 'SHOW'
 }
 
-tokens = ['NUMBER', 'STRING', 'HASHTAG', 'ID'] + list(reserved.values())
+tokens = ['NUMBER', 'STRING', 'HASHTAG', 'ID', 'NEWLINE'] + list(reserved.values())
 
 literals = [';']
 
@@ -39,7 +40,14 @@ def t_COMMENT(t):
     r'(/\*(.|\n)*?\*/)|(//.*)'
     pass
 
-t_ignore = r' \t\n'
+
+def t_newline(t):
+    r'\n+'
+    t.lexer.lineno += len(t.value)
+    t.type = 'NEWLINE'
+    return t
+
+t_ignore = r' \t'
 
 
 def t_error(t):
@@ -52,14 +60,32 @@ lexer = lex.lex()
 
 # Parsing rules
 
+
 def p_statement_print(p):
-    'statement : PRINT expression ;'
-    print p[2]
+    'statement : PRINT string end'
+    print_string = p[2]
+    print print_string[1:-1]
 
 
-def p_expression_string(p):
-    'expression : STRING'
+def p_statement_show(p):
+    'statement : SHOW hashtag end'
+    tag_name = p[2]
+    show(tag_name[1:])
+
+
+def p_string(p):
+    'string : STRING'
     p[0] = p[1]
+
+
+def p_hashtag(p):
+    'hashtag : HASHTAG'
+    p[0] = p[1]
+
+
+def p_end(p):
+    'end : NEWLINE'
+    p[0] = None
 
 
 def p_error(p):
@@ -71,11 +97,10 @@ def p_error(p):
 import ply.yacc as yacc
 yacc.yacc()
 
-while 1:
-    try:
-        s = raw_input('input > ')
-    except EOFError:
-        break
-    if not s:
-        continue
-    yacc.parse(s)
+data = '''
+// Hello world program for Instat
+print "hello world"
+show #helloworld
+'''
+
+yacc.parse(data)

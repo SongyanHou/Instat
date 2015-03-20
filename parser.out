@@ -1,0 +1,123 @@
+Created by PLY version 3.4 (http://www.dabeaz.com/ply)
+
+Unused terminals:
+
+    NUMBER
+    ID
+
+Grammar
+
+Rule 0     S' -> statement
+Rule 1     statement -> PRINT string end
+Rule 2     statement -> SHOW hashtag end
+Rule 3     string -> STRING
+Rule 4     hashtag -> HASHTAG
+Rule 5     end -> NEWLINE
+
+Terminals, with rules where they appear
+
+HASHTAG              : 4
+ID                   : 
+NEWLINE              : 5
+NUMBER               : 
+PRINT                : 1
+SHOW                 : 2
+STRING               : 3
+error                : 
+
+Nonterminals, with rules where they appear
+
+end                  : 1 2
+hashtag              : 2
+statement            : 0
+string               : 1
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . statement
+    (1) statement -> . PRINT string end
+    (2) statement -> . SHOW hashtag end
+
+    PRINT           shift and go to state 3
+    SHOW            shift and go to state 1
+
+    statement                      shift and go to state 2
+
+state 1
+
+    (2) statement -> SHOW . hashtag end
+    (4) hashtag -> . HASHTAG
+
+    HASHTAG         shift and go to state 5
+
+    hashtag                        shift and go to state 4
+
+state 2
+
+    (0) S' -> statement .
+
+
+
+state 3
+
+    (1) statement -> PRINT . string end
+    (3) string -> . STRING
+
+    STRING          shift and go to state 7
+
+    string                         shift and go to state 6
+
+state 4
+
+    (2) statement -> SHOW hashtag . end
+    (5) end -> . NEWLINE
+
+    NEWLINE         shift and go to state 8
+
+    end                            shift and go to state 9
+
+state 5
+
+    (4) hashtag -> HASHTAG .
+
+    NEWLINE         reduce using rule 4 (hashtag -> HASHTAG .)
+
+
+state 6
+
+    (1) statement -> PRINT string . end
+    (5) end -> . NEWLINE
+
+    NEWLINE         shift and go to state 8
+
+    end                            shift and go to state 10
+
+state 7
+
+    (3) string -> STRING .
+
+    NEWLINE         reduce using rule 3 (string -> STRING .)
+
+
+state 8
+
+    (5) end -> NEWLINE .
+
+    $end            reduce using rule 5 (end -> NEWLINE .)
+
+
+state 9
+
+    (2) statement -> SHOW hashtag end .
+
+    $end            reduce using rule 2 (statement -> SHOW hashtag end .)
+
+
+state 10
+
+    (1) statement -> PRINT string end .
+
+    $end            reduce using rule 1 (statement -> PRINT string end .)
+
