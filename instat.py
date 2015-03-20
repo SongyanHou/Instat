@@ -5,6 +5,16 @@ sys.path.insert(0,"../..")
 if sys.version_info[0] >= 3:
     raw_input = input
 
+# Set up a logging object
+import logging
+logging.basicConfig(
+    level = logging.DEBUG,
+    filename = "parselog.txt",
+    filemode = "w",
+    format = "%(filename)10s:%(lineno)4d:%(message)s"
+)
+log = logging.getLogger()
+
 reserved = {
     'print': 'PRINT',
     'show': 'SHOW'
@@ -56,7 +66,7 @@ def t_error(t):
 
 # Build the lexer
 import ply.lex as lex
-lexer = lex.lex()
+lexer = lex.lex(debug=True, debuglog=log)
 
 # Parsing rules
 
@@ -95,7 +105,7 @@ def p_error(p):
         print("Syntax error at EOF")
 
 import ply.yacc as yacc
-yacc.yacc()
+parser = yacc.yacc(debug=True, debuglog=log)
 
 data = '''
 // Hello world program for Instat
@@ -103,4 +113,4 @@ print "hello world"
 show #helloworld
 '''
 
-yacc.parse(data)
+yacc.parse(data, debug=log)
