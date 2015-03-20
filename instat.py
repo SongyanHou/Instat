@@ -75,9 +75,8 @@ def p_program(p):
 
 
 def p_statement_print(p):
-    'statement : PRINT string end'
-    print_string = p[2]
-    print print_string[1:-1]
+    'statement : PRINT expression end'
+    print p[2]
 
 
 def p_statement_show(p):
@@ -86,8 +85,13 @@ def p_statement_show(p):
     show(tag_name[1:])
 
 
-def p_string(p):
-    'string : STRING'
+def p_expression_string(p):
+    'expression : STRING'
+    p[0] = p[1][1:-1]
+
+
+def p_expression_number(p):
+    'expression : NUMBER'
     p[0] = p[1]
 
 
