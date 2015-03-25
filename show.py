@@ -8,6 +8,6 @@ def show(tag_name):
     tag_recent_media, next_media = api.tag_recent_media(tag_name=tag_search[0].name)
     photos = []
     for tag_media in tag_recent_media:
-        photos.append('<img src="%s"/>' % tag_media.get_standard_resolution_url())
+        photos.append(tag_media.get_standard_resolution_url())
     print photos[0]
 

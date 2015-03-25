@@ -1,9 +1,6 @@
 from show import show
 import sys
-sys.path.insert(0,"../..")
-
-if sys.version_info[0] >= 3:
-    raw_input = input
+sys.path.insert(0, "../..")
 
 # Set up a logging object
 import logging
@@ -30,7 +27,7 @@ t_SEMICOLON = r';'
 
 
 def t_ID(t):
-    r'[a-zA-Z_][a-zA-Z_0-9]*'
+    r'[a-zA-Z_][a-zA-Z0-9_]*'
     t.type = reserved.get(t.value, 'ID')    # Check for reserved words
     return t
 
