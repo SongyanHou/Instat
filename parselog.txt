@@ -23,7 +23,7 @@
    yacc.py: 338:State  : 9
    yacc.py: 352:Stack  : PRINT STRING . LexToken(SEMICOLON,';',3,54)
    yacc.py: 389:Action : Reduce rule [string -> STRING] with ['"hello world"'] and goto state 5
-   yacc.py: 423:Result : <str @ 0x2746458> ('"hello world"')
+   yacc.py: 423:Result : <str @ 0x1102fbce0> ('"hello world"')
    yacc.py: 337:
    yacc.py: 338:State  : 8
    yacc.py: 352:Stack  : PRINT string . LexToken(SEMICOLON,';',3,54)
@@ -32,17 +32,17 @@
    yacc.py: 338:State  : 11
    yacc.py: 352:Stack  : PRINT string SEMICOLON . LexToken(SHOW,'show',4,56)
    yacc.py: 389:Action : Reduce rule [end -> SEMICOLON] with [';'] and goto state 7
-   yacc.py: 423:Result : <NoneType @ 0x1e224f6c> (None)
+   yacc.py: 423:Result : <NoneType @ 0x10fcb27a8> (None)
    yacc.py: 337:
    yacc.py: 338:State  : 12
    yacc.py: 352:Stack  : PRINT string end . LexToken(SHOW,'show',4,56)
    yacc.py: 389:Action : Reduce rule [statement -> PRINT string end] with ['print','"hello world"',None] and goto state 3
-   yacc.py: 423:Result : <NoneType @ 0x1e224f6c> (None)
+   yacc.py: 423:Result : <NoneType @ 0x10fcb27a8> (None)
    yacc.py: 337:
    yacc.py: 338:State  : 3
    yacc.py: 352:Stack  : statement . LexToken(SHOW,'show',4,56)
    yacc.py: 389:Action : Reduce rule [program -> statement] with [None] and goto state 2
-   yacc.py: 423:Result : <NoneType @ 0x1e224f6c> (None)
+   yacc.py: 423:Result : <NoneType @ 0x10fcb27a8> (None)
    yacc.py: 337:
    yacc.py: 338:State  : 2
    yacc.py: 352:Stack  : program . LexToken(SHOW,'show',4,56)
@@ -55,7 +55,7 @@
    yacc.py: 338:State  : 6
    yacc.py: 352:Stack  : program SHOW HASHTAG . LexToken(SEMICOLON,';',4,72)
    yacc.py: 389:Action : Reduce rule [hashtag -> HASHTAG] with ['#helloworld'] and goto state 6
-   yacc.py: 423:Result : <str @ 0x273b5a0> ('#helloworld')
+   yacc.py: 423:Result : <str @ 0x1102f6540> ('#helloworld')
    yacc.py: 337:
    yacc.py: 338:State  : 5
    yacc.py: 352:Stack  : program SHOW hashtag . LexToken(SEMICOLON,';',4,72)
@@ -64,19 +64,19 @@
    yacc.py: 338:State  : 11
    yacc.py: 352:Stack  : program SHOW hashtag SEMICOLON . $end
    yacc.py: 389:Action : Reduce rule [end -> SEMICOLON] with [';'] and goto state 7
-   yacc.py: 423:Result : <NoneType @ 0x1e224f6c> (None)
+   yacc.py: 423:Result : <NoneType @ 0x10fcb27a8> (None)
    yacc.py: 337:
    yacc.py: 338:State  : 10
    yacc.py: 352:Stack  : program SHOW hashtag end . $end
    yacc.py: 389:Action : Reduce rule [statement -> SHOW hashtag end] with ['show','#helloworld',None] and goto state 4
-   yacc.py: 423:Result : <NoneType @ 0x1e224f6c> (None)
+   yacc.py: 423:Result : <NoneType @ 0x10fcb27a8> (None)
    yacc.py: 337:
    yacc.py: 338:State  : 7
    yacc.py: 352:Stack  : program statement . $end
    yacc.py: 389:Action : Reduce rule [program -> program statement] with [None,None] and goto state 1
-   yacc.py: 423:Result : <NoneType @ 0x1e224f6c> (None)
+   yacc.py: 423:Result : <NoneType @ 0x10fcb27a8> (None)
    yacc.py: 337:
    yacc.py: 338:State  : 2
    yacc.py: 352:Stack  : program . $end
-   yacc.py: 484:Done   : Returning <NoneType @ 0x1e224f6c> (None)
+   yacc.py: 484:Done   : Returning <NoneType @ 0x10fcb27a8> (None)
    yacc.py: 485:PLY: PARSE DEBUG END
