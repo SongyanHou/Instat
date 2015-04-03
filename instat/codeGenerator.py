@@ -617,59 +617,6 @@ class codeGenerator(object):
             poop = self.dispatch(tree.children[0], flag)
             return "((" + self.dispatchTuple(tree.children[0], flag) + ") and (" + arg + "))"
       
-               
-    def _every_statement(self, tree, flag=None):
-        global everys
-        global every_list        
-        everys = everys + 1
-        everyFlag = "EVERY"
-
-        s = "\ndef every" + str(everys) + "() :\n"
-        # s += "    print 'executing every" + str(everys) + "'\n"
-        self.inBlock()
-                
-        lines = self.dispatch(tree.children[1]).splitlines()
-        for line in lines:
-            s+= "    " + line +"\n"
-
-        s += "def condition" + str(everys) + "():\n"
-        # s += "    print 'checking" + str(everys) + "'\n"
-        self.inBlock()
-        s += "    if " + self.dispatchTuple(tree.children[0], everyFlag) + ": return True\n"
-        s += "every_list.append({'func' : 'every" + str(everys)
-        s += "', 'condition' : 'condition" + str(everys) + "'})"
-        self.outBlock()
-        self.outBlock()
-        return s
-
-    def _once_every_statement(self, tree, flag=None):
-        global everys
-        global every_list        
-        everys = everys + 1
-        everyFlag = "EVERY"
-
-        s = "happened" + str(everys) + " = False\n"
-        s += "\ndef every" + str(everys) + "() :\n"
-        self.inBlock()
-        # s += "    print 'executing once every" + str(everys) + "'\n"
-
-        lines = self.dispatch(tree.children[1]).splitlines()
-        for line in lines:
-            s+= "    " + line +"\n"
-        s += "def condition" + str(everys) + "():\n"
-        # s += "    print 'checking" + str(everys) + "'\n"
-        self.inBlock()
-        s += "    global happened" + str(everys) + "\n"
-        s += "    if " + self.dispatchTuple(tree.children[0], everyFlag) + " and happened" + str(everys) + " == False"+ ":\n"
-        s += "        happened" + str(everys) + " = True\n"
-        s += "        return True\n"
-        s += "    if not(" + self.dispatchTuple(tree.children[0], everyFlag) + "):\n"
-        s += "        happened" + str(everys) + " = False\n"
-        s += "every_list.append({'func' : 'every" + str(everys)
-        s += "', 'condition' : 'condition" + str(everys) + "'})"
-        self.outBlock()
-        self.outBlock()
-        return s
 
     def _iteration_statement(self, tree, flag=None):
         condition = self.dispatch(tree.children[0])
@@ -727,17 +674,6 @@ class codeGenerator(object):
         s = "print " + arg
         return s
 
-    def _log_statement(self, tree, flag=None):
-        arg = self.dispatch(tree.children[0])
-        if type(arg) is tuple:
-            arg = arg[1]
-
-        if type(arg) is int or type(arg) is float:
-            arg = str(arg)
-        
-            
-        s = "log_file.write( str(" + arg + ") + '\\n'" + ")"
-        return s
 
     def _return_statement(self, tree, flag=None):
         self.returnNumber +=1

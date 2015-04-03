@@ -6,9 +6,6 @@ import re
 reserved = {
     #types
     'number' : 'TNUMBER',
-    'temp_F' : 'TF',
-    'temp_C' : 'TC',
-    'temp_K' : 'TK',
     'time' : 'TTIME',
     'datetime' : 'TDATETIME',
     'boolean' : 'TBOOLEAN',
@@ -22,7 +19,6 @@ reserved = {
     'string' : 'TSTRING',
     'list' : 'TLIST',
     # Other
-    'every' : 'EVERY',
     'def' : 'DEF',
     'to' : 'TO',
     'or' : 'OR',
@@ -40,14 +36,11 @@ reserved = {
     'not' : 'NOT',
     'to' : 'TO',
     'each' : 'EACH',
-    'log' : 'LOG',
-    'once' : 'ONCE',
     'during' : 'DURING',
     'true' : 'TRUE',
     'false' : 'FALSE',
     'power' : 'POWER',
     'return' : 'RETURN',
-    'SET_TEMP' : 'SET_TEMP',
     }
 
 tokens = [
@@ -116,13 +109,7 @@ def t_DATETIME(t):
 def t_DATE(t):
     r'[0-3]?[0-9]/[01]?[0-9]/[0-9]+'
     return t
-def t_TEMPERATURE(t):
-    r'[0-9]+[ ]*[CFK]'
-    return t
-
-def t_TIME(t):
-    r'[01]?[0-9]:[0-5][0-9][ ]((AM)|(PM))'
-    return t
+    
 def t_DAYS(t):
     r'[0-9]+[ ]Days'
     return t
@@ -131,12 +118,6 @@ def t_MONTHS(t):
     return t
 def t_YEARS(t):
     r'[0-9]+[ ]Years'
-    return t
-def t_HOURS(t):
-    r'[0-9]+[ ]Hours'
-    return t
-def t_MINUTES(t):
-    r'[0-9]+[ ]Minutes'
     return t
 
 def t_STRING(t):

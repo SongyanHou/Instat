@@ -81,18 +81,6 @@ def p_function_param_number(p):
     """function_param : TNUMBER ID"""
     p[0] = Node('function_param_number', [p[1], p[2]])
 
-def p_function_param_temperatureF(p):
-    """function_param : TF ID"""
-    p[0] = Node('function_param_temperatureF', [p[1], p[2]])
-
-def p_function_param_temperatureC(p):
-    """function_param : TC ID"""
-    p[0] = Node('function_param_temperatureC', [p[1], p[2]])
-
-def p_function_param_temperatureK(p):
-    """function_param : TK ID"""
-    p[0] = Node('function_param_temperatureK', [p[1], p[2]])
-
 def p_function_param_time(p):
     """function_param : TTIME ID"""
     p[0] = Node('function_param_time', [p[1], p[2]])
@@ -173,21 +161,18 @@ def p_statement_list(p):
 # Add types of statements here, e.g. selection, iteration, etc!
 def p_statement(p):
     """ statement : assignment_statement NEWLINE
-                  | every_statement
                   | list_change NEWLINE
-                  | once_every_statement
                   | iteration_statement
                   | selection_statement
                   | print_statement SEMICOLON
-                  | log_statement SEMICOLON
                   | for_statement
                   | print_statement NEWLINE
-                  | log_statement NEWLINE
                   | return_statement NEWLINE
                   | function_expression NEWLINE
     """
     #maybe add | list_change NEWLINE
     p[0] = Node("statement", [p[1]])
+
 
 def p_list_change(p):
     '''list_change : ADD LPAREN ID COMMA or_expression RPAREN 
@@ -452,22 +437,6 @@ def p_primary_expression_months(p):
 def p_primary_expression_years(p):
     """ primary_expression : YEARS """
     p[0] = Node('years_expression', [], p[1])
-def p_primary_expression_hours(p):
-    """ primary_expression : HOURS """
-    p[0] = Node('hours_expression', [], p[1])
-def p_primary_expression_minutes(p):
-    """ primary_expression : MINUTES """
-    p[0] = Node('minutes_expression', [], p[1])
-    
-def p_every_statement(p):
-#    """ every_statement : EVERY LPAREN primary_expression RPAREN COLON NEWLINE INDENT statement_list DEDENT """
-    """ every_statement : EVERY LPAREN during_or_expression RPAREN COLON NEWLINE INDENT statement_list DEDENT """
-    p[0] = Node("every_statement", [p[3], p[8]])
-
-def p_once_every_statement(p):
-#    """ once_every_statement : ONCE EVERY LPAREN primary_expression RPAREN COLON NEWLINE INDENT statement_list DEDENT """
-    """ once_every_statement : ONCE EVERY LPAREN during_or_expression RPAREN COLON NEWLINE INDENT statement_list DEDENT """
-    p[0] = Node("once_every_statement", [p[4], p[9]])
 
 #fix this when tabs and newlines happen
 def p_iteration_statement(p):
@@ -490,11 +459,6 @@ def p_print_statement(p):
     """
     p[0] = Node("print_statement", [p[3]])
 
-    
-def p_log_statement(p):
-    """ log_statement : LOG LPAREN or_expression RPAREN
-    """
-    p[0] = Node("log_statement", [p[3]])
 
 
 #need to add foreach/ also confused about the grammar
