@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="67eb94e3-dca5-4258-8f08-3a8f5d4cd9ad" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/Instat.iml" afterPath="$PROJECT_DIR$/.idea/Instat.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/instat/instatLex.py" afterPath="$PROJECT_DIR$/instat/instatLex.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-    </list>
+    <list default="true" id="67eb94e3-dca5-4258-8f08-3a8f5d4cd9ad" name="Default" comment="" />
     <ignored path="Instat.iws" />
     <ignored path=".idea/workspace.xml" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -73,8 +69,8 @@
       <file leaf-file-name="instatLex.py" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/instat/instatLex.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.7808219" vertical-offset="690" max-vertical-offset="6030">
-              <caret line="65" column="23" selection-start-line="65" selection-start-column="23" selection-end-line="65" selection-end-column="23" />
+            <state vertical-scroll-proportion="0.5753425" vertical-offset="0" max-vertical-offset="6030">
+              <caret line="14" column="12" selection-start-line="14" selection-start-column="12" selection-end-line="14" selection-end-column="12" />
               <folding>
                 <element signature="e#0#21#0" expanded="true" />
               </folding>
@@ -802,8 +798,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/instat/instatLex.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.7808219" vertical-offset="690" max-vertical-offset="6030">
-          <caret line="65" column="23" selection-start-line="65" selection-start-column="23" selection-end-line="65" selection-end-column="23" />
+        <state vertical-scroll-proportion="0.5753425" vertical-offset="0" max-vertical-offset="6030">
+          <caret line="14" column="12" selection-start-line="14" selection-start-column="12" selection-end-line="14" selection-end-column="12" />
           <folding>
             <element signature="e#0#21#0" expanded="true" />
           </folding>
