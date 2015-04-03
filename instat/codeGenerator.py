@@ -286,11 +286,6 @@ class codeGenerator(object):
 
     def _statement(self, tree, flag=None):
         return self.dispatch(tree.children) + "\n"
-
-    def _set_temp_statement(self, tree, flag=None):
-        # print tree.children[0]
-        arg = self.dispatch(tree.children[0])
-        return "myThermoStat.set_temp(" + arg[1] + ".getCelsius())\n"
                 
 
     #whoever wrote this, please have a look at _assignnment_statement_list_index
@@ -321,8 +316,6 @@ class codeGenerator(object):
         string += tree.leaf + " = " + arg
         return string
 
-    def _get_temp_expression(self, tree, flag=None):
-        return "C", "myThermoStat.get_temp()"
 
     #not sure whether this actually works with the symbol table and everything
     def _assignment_statement_list_index(self, tree, flag=None):
@@ -814,58 +807,12 @@ class codeGenerator(object):
         string = "datetime.datetime.now().weekday() == " + day
         return "DAY", string
 
-    def get_day_value(self, day):
-        if day == "Monday":
-            return "0"
-        elif day == "Tuesday":
-            return "1"
-        elif day == "Wednesday":
-            return "2"
-        elif day == "Thursday":
-            return "3"
-        elif day == "Friday":
-            return "4"
-        elif day == "Saturday":
-            return "5"
-        elif day == "Sunday":
-            return "6"
-        exit("WrongDay: " + day + "is not a valid day")
-
 
     def _month_expression(self, tree, flag=None):
         month = self.get_month_value(tree.leaf)
         string = "datetime.datetime.now().month == " + month
         return "MONTH", string
 
-    def get_month_value(self, month):
-        s = ''
-        if month == "January":
-            s = "1"
-        elif month == 'February':
-            s = "2"
-        elif month == 'March':
-            s = "3"
-        elif month == 'April':
-            s = "4"
-        elif month == 'May':
-            s = "5"
-        elif month == 'June':
-            s = "6"
-        elif month == 'July':
-            s = "7"
-        elif month == 'August':
-            s = "8"
-        elif month == 'September':
-            s = "9"
-        elif month == 'October':
-            s = "10"
-        elif month == 'November':
-            s = "11"
-        elif month == 'December':
-            s = "12"
-        else:
-            s = "13"
-        return s
 
     def _date_time_expression(self, tree, flag=None):
         dateTimeTable = self.get_date_time_values(tree.leaf)

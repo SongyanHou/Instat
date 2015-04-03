@@ -4,27 +4,6 @@ import re
 
 # List of token names.   This is always required
 reserved = {
-    # Days
-    'Monday' : 'MONDAY',
-    'Tuesday': 'TUESDAY',
-    'Wednesday' : 'WEDNESDAY',
-    'Thursday' : 'THURSDAY',
-    'Friday' : 'FRIDAY',
-    'Saturday' : 'SATURDAY',
-    'Sunday' : 'SUNDAY',
-    # Months
-    'January': 'JANUARY',
-    'February': 'FEBRUARY',
-    'March': 'MARCH',
-    'April': 'APRIL',
-    'May': 'MAY',
-    'June': 'JUNE',
-    'July': 'JULY',
-    'August': 'AUGUST',
-    'September': 'SEPTEMBER',
-    'October': 'OCTOBER',
-    'November': 'NOVEMBER',
-    'December': 'DECEMBER',
     #types
     'number' : 'TNUMBER',
     'temp_F' : 'TF',
@@ -69,7 +48,6 @@ reserved = {
     'power' : 'POWER',
     'return' : 'RETURN',
     'SET_TEMP' : 'SET_TEMP',
-    'GET_TEMP' : 'GET_TEMP',
     }
 
 tokens = [
@@ -129,8 +107,6 @@ t_RELOP     = r'(<=)|(>=)|(<)|(>)'
 t_COMMA     = r'(,)'
 t_FORRANGE = r'\s*\.\.\.\s*'
 t_POWER     = r'\^'
-t_GET_TEMP  = r'GET_TEMP'
-t_SET_TEMP  = r'SET_TEMP'
 # A regular expression rule with some action code
 
 def t_DATETIME(t):

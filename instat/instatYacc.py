@@ -185,15 +185,9 @@ def p_statement(p):
                   | log_statement NEWLINE
                   | return_statement NEWLINE
                   | function_expression NEWLINE
-                  | set_temp_statement NEWLINE
     """
     #maybe add | list_change NEWLINE
     p[0] = Node("statement", [p[1]])
-
-def p_set_temp_statement(p):
-    """ set_temp_statement : SET_TEMP LPAREN or_expression RPAREN
-    """
-    p[0] = Node('set_temp_statement', [p[3]])
 
 def p_list_change(p):
     '''list_change : ADD LPAREN ID COMMA or_expression RPAREN 
@@ -266,10 +260,6 @@ def p_assignment_statement(p):
     
     p[0] = Node("assignment_statement", [p[3]], p[1])  
 
-def p_get_temp_expression(p):
-    """ get_temp_expression : GET_TEMP
-    """
-    p[0] = Node("get_temp_expression", [])
 
 def p_assignment_statement_list_index(p):
     """ assignment_statement : list_index EQUALS or_expression
@@ -430,42 +420,12 @@ def p_primary_expression_string(p):
     """
     p[0] = Node('primary_expression_string', [], p[1])
 
-def p_primary_expression_getTemp(p):
-    """ primary_expression : get_temp_expression
-    """
-    p[0] = Node('get_temp_expression', [])
 
 def p_primary_expression_constant(p):
     """ primary_expression : CONSTANT
     """
     p[0] = Node('primary_expression_constant', [], p[1])
 
-def p_primary_expression_day(p):
-    """ primary_expression : MONDAY
-                           | TUESDAY
-                           | WEDNESDAY
-                           | THURSDAY
-                           | FRIDAY
-                           | SATURDAY
-                           | SUNDAY
-    """
-    p[0] = Node('day_expression', [], p[1])
-
-def p_primary_expression_month(p):
-    """ primary_expression : JANUARY
-                           | FEBRUARY
-                           | MARCH
-                           | APRIL
-                           | MAY
-                           | JUNE
-                           | JULY
-                           | AUGUST
-                           | SEPTEMBER
-                           | OCTOBER
-                           | NOVEMBER
-                           | DECEMBER
-    """
-    p[0] = Node('month_expression', [], p[1])
 
 def p_primary_expression_date_time(p):
     """ primary_expression : DATETIME """
@@ -640,14 +600,6 @@ if __name__ == '__main__':
 ##"""
 
     s = '''
-a = 40 F
-SET_TEMP(a)
-SET_TEMP(40 F)
-d = GET_TEMP
-print(GET_TEMP)
-print(d)
-if(50 C < GET_TEMP):
-    print("YAAAY")
 '''
 
 
