@@ -19,28 +19,46 @@ reserved = {
     'string' : 'TSTRING',
     'list' : 'TLIST',
     # Other
+<<<<<<< HEAD
     'def' : 'DEF',
+=======
+    #'every' : 'EVERY',
+    'function' : 'DEF',
+>>>>>>> 7281f1349f69e530149bab68dfa8365207e330a6
     'to' : 'TO',
-    'or' : 'OR',
-    'and' : 'AND',
+    '||' : 'OR',
+    '&&' : 'AND',
     'if' : 'IF',
     'else' : 'ELSE',
-    'add' : 'ADD',
-    'remove' : 'REMOVE',
-    'sort' : 'SORT',
-    #'elif' : 'ELSEIF',
+    #'add' : 'ADD',
+    #'remove' : 'REMOVE',
+    #'sort' : 'SORT',
+    'elif' : 'ELSEIF',
     'while' : 'WHILE',
     'for' : 'FOR',
     'in' : 'IN', 
     'print' : 'PRINT',
+<<<<<<< HEAD
     'not' : 'NOT',
     'to' : 'TO',
     'each' : 'EACH',
+=======
+    '!' : 'NOT',
+    #'to' : 'TO',
+    #'each' : 'EACH',
+    #'log' : 'LOG',
+    #'once' : 'ONCE',
+>>>>>>> 7281f1349f69e530149bab68dfa8365207e330a6
     'during' : 'DURING',
-    'true' : 'TRUE',
-    'false' : 'FALSE',
-    'power' : 'POWER',
+    'True' : 'TRUE',
+    'False' : 'FALSE',
+    #'power' : 'POWER',
     'return' : 'RETURN',
+<<<<<<< HEAD
+=======
+    #'SET_TEMP' : 'SET_TEMP',
+    #'GET_TEMP' : 'GET_TEMP',
+>>>>>>> 7281f1349f69e530149bab68dfa8365207e330a6
     }
 
 tokens = [

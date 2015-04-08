@@ -1,4 +1,4 @@
-from show import show
+from instat_built_in import show, search
 import sys
 sys.path.insert(0, "../..")
 
@@ -14,7 +14,8 @@ log = logging.getLogger()
 
 reserved = {
     'print': 'PRINT',
-    'show': 'SHOW'
+    'show': 'SHOW',
+    'search': 'SEARCH'
 }
 
 tokens = ['NUMBER', 'STRING', 'HASHTAG', 'ID', 'SEMICOLON', 'NEWLINE'] + list(reserved.values())
@@ -65,6 +66,7 @@ lexer = lex.lex(debug=True, debuglog=log)
 
 # Parsing rules
 
+
 def p_program(p):
     '''program : program statement
                | statement'''
@@ -80,6 +82,53 @@ def p_statement_show(p):
     'statement : SHOW hashtag end'
     tag_name = p[2]
     show(tag_name[1:])
+
+
+def p_statement_search_all(p):
+    'statement : SEARCH user location hashtag end'
+    user = p[2]
+    location = p[3]
+    tag_name = p[4]
+    search(user=user, location=location, tag_name=tag_name[1:])
+
+
+def p_statement_search_user(p):
+    'statement : SEARCH user end'
+    user = p[2]
+    search(user=user)
+
+
+def p_statement_search_user_and_location(p):
+    'statement : SEARCH user location end'
+    user = p[2]
+    location = p[3]
+    search(user=user, location=location)
+
+
+def p_statement_search_user_and_tag(p):
+    'statement : SEARCH user hashtag end'
+    user = p[2]
+    tag_name = p[3]
+    search(user=user, tag_name=tag_name[1:])
+
+
+def p_statement_search_location(p):
+    'statement : SEARCH location end'
+    location = p[2]
+    search(location=location)
+
+
+def p_statement_search_location_and_tag(p):
+    'statement : SEARCH location hashtag end'
+    location = p[2]
+    tag_name = p[3]
+    search(location=location, tag_name=tag_name[1:])
+
+
+def p_statement_search_tag(p):
+    'statement : SEARCH hashtag end'
+    tag_name = p[2]
+    search(tag_name=tag_name[1:])
 
 
 def p_expression_string(p):
