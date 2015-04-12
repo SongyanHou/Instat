@@ -94,17 +94,12 @@ class InstatLexer(object):
         # Build the lexer
         self.lexer = lex.lex(module=self, debug=True, debuglog=log)
 
-    def t_ID(self, t):
-        r'[a-zA-Z_][a-zA-Z0-9_]*'
-        t.type = InstatLexer.reserved.get(t.value, 'ID')    # Check for reserved words
-        if t.type == 'NONE':
-            t.value = None
-        if t.type == 'TRUE':
-            t.value = True
-            t.type = 'BOOLEAN'
-        if t.type == 'FALSE':
-            t.value = False
-            t.type = 'BOOLEAN'
+    def t_FLOAT(self, t):
+        r'[-+]?\d+\.\d+'
+        try:
+            t.value = float(t.value)
+        except ValueError:
+            print "Float value too large", t.value
         return t
 
     def t_DATE(self, t):
@@ -127,7 +122,7 @@ class InstatLexer(object):
         return t
 
     def t_INTEGER(self, t):
-        r'\d+'
+        r'[-+]?\d+'
         try:
             t.value = int(t.value)
         except ValueError:
@@ -135,12 +130,17 @@ class InstatLexer(object):
             t.value = 0
         return t
 
-    def t_FLOAT(self, t):
-        r'\d+\.\d+'
-        try:
-            t.value = float(t.value)
-        except ValueError:
-            print "Float value too large", t.value
+    def t_ID(self, t):
+        r'[a-zA-Z_][a-zA-Z0-9_]*'
+        t.type = InstatLexer.reserved.get(t.value, 'ID')    # Check for reserved words
+        if t.type == 'NONE':
+            t.value = None
+        if t.type == 'TRUE':
+            t.value = True
+            t.type = 'BOOLEAN'
+        if t.type == 'FALSE':
+            t.value = False
+            t.type = 'BOOLEAN'
         return t
 
     def t_COMMENT(self, t):
@@ -168,21 +168,3 @@ class InstatLexer(object):
             print tok
             token_list.append(tok)
         return token_list
-
-if __name__ == '__main__':
-    instatlexer = InstatLexer()
-
-    data = '''
-        // Hello world program for Instat
-        print "hello world";
-        show #helloworld;
-        '''
-
-    instatlexer.lexer.input(data)
-
-    while True:
-        tok = instatlexer.lexer.token()
-        if not tok:
-            break
-        else:
-            print tok
