@@ -65,25 +65,6 @@ class InstatLexer(object):
     t_STRING = r'\"([^"]|\n)*\"'
     t_HASHTAG = r'\#[a-zA-Z0-9_][a-zA-Z0-9_]*'
     t_SEMICOLON = r';'
-    t_FROM = r'from'
-    t_TO = r'to'
-    t_LOGIN = r'login'
-    t_LOGOUT = r'logout'
-    t_FOR = r'for'
-    t_WHILE = r'while'
-    t_IF = r'if'
-    t_ELSE = r'else'
-    t_ELIF = r'elif'
-    t_IN = r'in'
-    t_LENGTH = r'length'
-    t_FUNCTION = r'function'
-    t_PIECHART = r'piechart'
-    t_BARCHART = r'barchart'
-    t_MAIN = r'main'
-    t_SHOW = r'show'
-    t_SEARCH = r'search'
-    t_PRINT = r'print'
-    t_SET = r'set'
     t_LPAREN    = r'\('
     t_RPAREN    = r'\)'
     t_LBRACK    = r'\{'
@@ -183,7 +164,7 @@ if __name__ == '__main__':
     data = '''
         // Hello world program for Instat 
 
-        if else elif main from login logout for while in piechart barchart
+        if else elif main from12313 login logout for while in piechart barchart
         to
         function
         set
