@@ -1,0 +1,5 @@
+parselog.txt
+parsetab.py
+*.pyc
+*.egg
+*.pyo
