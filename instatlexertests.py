@@ -1,10 +1,10 @@
 import unittest
-import instat_test
+import instatlex
 
 
 class TestInstatLexer(unittest.TestCase):
     def setUp(self):
-        self.lexer = instat_test.InstatLexer()
+        self.lexer = instatlex.InstatLexer()
 
     def test_print(self):
         data = '''
@@ -307,7 +307,7 @@ class TestInstatLexer(unittest.TestCase):
         self.assertNotEqual(tokens[1].type, 'MAIN', 'token is MAIN')
         self.assertNotEqual(tokens[2].type, 'MAIN', 'token is MAIN')
 
-    def test_main(self):
+    def test_set(self):
         data = '''
         set
         Set
