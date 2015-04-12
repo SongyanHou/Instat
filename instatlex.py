@@ -91,20 +91,20 @@ class InstatLexer(object):
         print("Illegal character '%s'" % t.value[0])
         t.lexer.skip(1)
 
-if __name__ == '__main__':
-    instatlexer = InstatLexer()
-
-    data = '''
-        // Hello world program for Instat
-        print "hello world";
-        show #helloworld;
-        '''
-
-    instatlexer.lexer.input(data)
-
-    while True:
-        tok = instatlexer.lexer.token()
-        if not tok:
-            break
-        else:
+    def test(self, data):
+        self.lexer.input(data)
+        token_list = []
+        while True:
+            tok = self.lexer.token()
+            if not tok:
+                break
             print tok
+            token_list.append(tok)
+        return token_list
+
+if __name__ == '__main__':
+    lexer = InstatLexer()
+    data = '''
+        print
+        '''
+    lexer.test(data)
