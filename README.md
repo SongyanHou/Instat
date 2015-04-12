@@ -12,7 +12,7 @@ to see the input format.
 # Git Etiquette
 + Never modify *master* directly
 + Create a new branch for each feature: *git checkout -b 'MyBranch'*
-+ Work on branches only
++ Work on branches only, push to github repo: *git push*
 + Create a **pull request**: go to [git repo](https://github.com/SongyanHou/Instat), select your branch on top left corner, and create a pull request on top right corner.
 + Accept the pull request if you are confident; otherwise ask for code review.
 + **rebase** unmerged branch when it falls behind *master*
