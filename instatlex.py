@@ -170,8 +170,19 @@ class InstatLexer(object):
         return token_list
 
 if __name__ == '__main__':
-    lexer = InstatLexer()
+    instatlexer = InstatLexer()
+
     data = '''
-        print
+        // Hello world program for Instat
+        print "hello world";
+        show #helloworld;
         '''
-    lexer.test(data)
+
+    instatlexer.lexer.input(data)
+
+    while True:
+        tok = instatlexer.lexer.token()
+        if not tok:
+            break
+        else:
+            print tok
