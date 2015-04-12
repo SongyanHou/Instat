@@ -23,11 +23,13 @@ class InstatLexer(object):
         'login': 'LOGIN',
         'logout': 'LOGOUT',
         'main': 'MAIN',
-        'set': 'SET'
+        'set': 'SET',
+        'True': 'TRUE',
+        'False': 'FALSE',
+        'None': 'NONE'
     }
 
     unreserved_tokens = [
-        'NONE',
         'INTEGER',
         'FLOAT',
         'BOOLEAN',
@@ -38,7 +40,23 @@ class InstatLexer(object):
         'NEWLINE',
         'USER',
         'LOCATION',
-        'DATE'
+        'DATE',
+        'LPAREN',
+        'RPAREN',
+        'LBRACK',
+        'RBRACK',
+        'LBRACE',
+        'RBRACE',
+        'EQUALS',
+        'PLUS',
+        'MINUS',
+        'COLON',
+        'MULTIPLY',
+        'DIVIDE',
+        'EQUIV',
+        'NONEQUIV',
+        'RELOP',
+        'COMMA'
     ]
 
     tokens = unreserved_tokens + list(reserved.values())
@@ -66,6 +84,22 @@ class InstatLexer(object):
     t_SEARCH = r'search'
     t_PRINT = r'print'
     t_SET = r'set'
+    t_LPAREN    = r'\('
+    t_RPAREN    = r'\)'
+    t_LBRACK    = r'\{'
+    t_RBRACK    = r'\}'
+    t_LBRACE    = r'\['
+    t_RBRACE    = r'\]'
+    t_EQUALS    = r'='
+    t_PLUS      = r'\+'
+    t_MINUS     = r'\-'
+    t_COLON     = r':'
+    t_MULTIPLY  = r'\*'
+    t_DIVIDE    = r'/'
+    t_EQUIV     = r'(==)'
+    t_NONEQUIV  = r'(!=)'
+    t_RELOP     = r'(<=)|(>=)|(<)|(>)'
+    t_COMMA     = r'(,)'
 
     def __init__(self):
         # Set up a logging object
@@ -82,6 +116,14 @@ class InstatLexer(object):
     def t_ID(self, t):
         r'[a-zA-Z_][a-zA-Z0-9_]*'
         t.type = InstatLexer.reserved.get(t.value, 'ID')    # Check for reserved words
+        if t.type == 'NONE':
+            t.value = None
+        if t.type == 'TRUE':
+            t.value = True
+            t.type = 'BOOLEAN'
+        if t.type == 'FALSE':
+            t.value = False
+            t.type = 'BOOLEAN'
         return t
 
     def t_DATE(self, t):
@@ -120,14 +162,6 @@ class InstatLexer(object):
             print "Float value too large", t.value
         return t
 
-    def t_BOOLEAN(self, t):
-        r'True|False'
-        if t.value == 'True':
-            t.value = True
-        else:
-            t.value = False
-        return t
-
     def t_COMMENT(self, t):
         r'(/\*(.|\n)*?\*/)|(//.*)'
         pass
@@ -153,8 +187,13 @@ if __name__ == '__main__':
         to
         function
         set
+        True
+        False
+        Noneqweq
         length
 
+        (){}[]+-*/><=
+        1==2 1!=2 asdasd=12
         @asd.asdasdasd
         @(
         search
