@@ -3,7 +3,7 @@ import sys
 
 client_id = "fae19a5f499c4aff820f71ce869e5579".strip()
 client_secret = "c3a8e0773e174a8caa2f785e9120d5b5".strip()
-redirect_uri = "https://github.com/SongyanHou/Instat".strip()
+redirect_uri = "http://instat.elasticbeanstalk.com/".strip()
 scope = ["basic"]
 
 def get_access_token():
