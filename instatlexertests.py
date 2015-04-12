@@ -6,6 +6,10 @@ class TestInstatLexer(unittest.TestCase):
     def setUp(self):
         self.lexer = instatlex.InstatLexer()
 
+    def tearDown(self):
+        self.lexer.dispose()
+        self.lexer = None
+
     def test_print(self):
         data = '''
         print
