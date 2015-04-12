@@ -158,38 +158,20 @@ class InstatLexer(object):
         print("Illegal character '%s'" % t.value[0])
         t.lexer.skip(1)
 
-if __name__ == '__main__':
-    instatlexer = InstatLexer()
-
-    data = '''
-        // Hello world program for Instat 
-
-        if else elif main from12313 login logout for while in piechart barchart
-        to
-        function
-        set
-        True
-        False
-        Noneqweq
-        length
-        ,
-
-        (){}[]+-*/><=
-        1==2 1!=2 asdasd=12
-        @asd.asdasdasd
-        @(
-        search
-        25/08/2015 10:50 AM
-
-        print "hello world";
-        show #helloworld;
-        '''
-
-    instatlexer.lexer.input(data)
-
-    while True:
-        tok = instatlexer.lexer.token()
-        if not tok:
-            break
-        else:
+    def test(self, data):
+        self.lexer.input(data)
+        token_list = []
+        while True:
+            tok = self.lexer.token()
+            if not tok:
+                break
             print tok
+            token_list.append(tok)
+        return token_list
+
+if __name__ == '__main__':
+    lexer = InstatLexer()
+    data = '''
+        print
+        '''
+    lexer.test(data)
