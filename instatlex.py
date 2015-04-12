@@ -80,7 +80,7 @@ class InstatLexer(object):
     t_EQUIV     = r'(==)'
     t_NONEQUIV  = r'(!=)'
     t_RELOP     = r'(<=)|(>=)|(<)|(>)'
-    t_COMMA     = r'(,)'
+    t_COMMA     = r','
 
     def __init__(self):
         # Set up a logging object
@@ -172,6 +172,7 @@ if __name__ == '__main__':
         False
         Noneqweq
         length
+        ,
 
         (){}[]+-*/><=
         1==2 1!=2 asdasd=12
