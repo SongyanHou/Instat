@@ -6,10 +6,23 @@ class InstatLexer(object):
     reserved = {
         'print': 'PRINT',
         'show': 'SHOW',
-        'search': 'SEARCH'
+        'search': 'SEARCH',
+        'string': 'STRINGF'
     }
 
-    tokens = ['NUMBER', 'STRING', 'HASHTAG', 'ID', 'SEMICOLON', 'NEWLINE'] + list(reserved.values())
+    unreserved_tokens = [
+        'NONE',
+        'INTEGER',
+        'FLOAT',
+        'BOOLEAN',
+        'STRING',
+        'HASHTAG',
+        'ID',
+        'SEMICOLON',
+        'NEWLINE'
+    ]
+
+    tokens = unreserved_tokens + list(reserved.values())
 
     # Tokens
     t_STRING = r'\"([^"]|\n)*\"'
@@ -33,13 +46,34 @@ class InstatLexer(object):
         t.type = InstatLexer.reserved.get(t.value, 'ID')    # Check for reserved words
         return t
 
-    def t_NUMBER(self, t):
+    def t_NONE(self, t):
+        r'None'
+        t.value = None
+        return t
+
+    def t_INTEGER(self, t):
         r'\d+'
         try:
             t.value = int(t.value)
         except ValueError:
             print "Integer value too large", t.value
             t.value = 0
+        return t
+
+    def t_FLOAT(t):
+        r'\d+\.\d+'
+        try:
+            t.value = float(t.value)
+        except ValueError:
+            print "Float value too large", t.value
+        return t
+
+    def t_BOOLEAN(self, t):
+        r'True|False'
+        if t.value == 'True':
+            t.value = True
+        else:
+            t.value = False
         return t
 
     def t_COMMENT(self, t):
