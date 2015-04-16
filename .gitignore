@@ -3,4 +3,4 @@ parsetab.py
 *.pyc
 *.egg
 *.pyo
-*.out:q
+*.out
