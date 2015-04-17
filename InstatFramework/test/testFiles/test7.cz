@@ -1,4 +1,0 @@
-#4.0
-def poop(number x):
-    x = 2+2
-ret = 4
