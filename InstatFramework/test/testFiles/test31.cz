@@ -1,0 +1,10 @@
+#None
+d = Monday to Sunday
+m = January to December
+dt = 1/1/1 to 31/12/9999
+dtT = 1/1/1 12:00 AM to 31/12/9999 11:59 PM
+t = 12:00 AM to 11:59 PM
+print(d)
+print(m)
+print(dtT)
+print(t)

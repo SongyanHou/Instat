@@ -1,0 +1,159 @@
+* Final  Grammar
+
+  PROGRAM -> EXTERNAL-DECLARATION  | 
+             PROGRAM  EXTERNAL-DECLARATION
+
+  EXTERNAL-DECLARATION -> FUNCTION-DEFINITION *\n* | 
+                          STATEMENT *\n*
+
+  FUNCTION-DEFINITION -> *def* ID *(* FUNCTION_PARAMETER_LIST *) : \n* STATEMENT-LIST
+
+  STATEMENT-LIST -> STATEMENT *\n* | 
+                    STATEMEN-LIST STATEMENT *\n*
+
+
+  STATEMENT -> ASSIGNMENT-STATEMENT *\n* |
+		   EVERY-STATEMENT |
+		   LIST-CHANGE *\n* |
+		   ONCE-EVERY-STATEMENT |
+	       SELECTION-STATEMENT |
+	       ITERATION-STATEMENT |
+	       RETURN-STATEMENT |
+               PRINT-STATEMENT *\n* |
+			   PRINT-STATEMENT *;* |
+			   LOG-STATEMENT *\n* |
+			   LOG-STATEMENT *;* |
+               FOR-STATEMENT
+          
+   LIST-CHANGE -> ADD *(* ID *,* OR-EXPRESSION *)* |
+			   *SORT(* ID *)*
+			   
+   LIST-CHANGE-INDEX -> *ADD ( * LIST-INDEX *,* OR-EXPRESSION *)*
+					    | * SORT ( * LIST-INDEX *)*
+   
+   LIST-CHANGE-REMOVE -> *REMOVE (* ID *,* OR-EXPRESSION *)*
+   
+   LIST-CHANGE-REMOVE-INDEX -> *REMOVE( * LIST-INDEX *,* OR-EXPRESSION *)*
+   
+   LIST-INDEX-ID -> ID *[* ADDITIVE-EXPRESSION *]*
+   
+   LIST-INDEX-DOUBLE -> LIST-INDEX *[* ADDITIVE-EXPRESSION *]*
+   
+   LIST-START -> *[]*
+			   | *[* LIST-EXPRESSION *]*
+
+   LIST-EXPRESSION -> LIST-EXPRESSION *,* OR-EXPRESSION |
+					| OR-EXPRESSION
+					
+
+   ASSIGNMENT-STATEMENT -> ID *=* OR-EXPRESSION |  //code didn't work with ID = CONSTANT
+                           ID *=* ASSIGNMENT-STATEMENT OR-EXPRESSION
+						   
+   ASSIGNNMENT-STATEMENT-LIST-INDEX -> LIST-INDEX *=* OR-EXPRESSION |
+									 | LIST-INDEX *=* ASSIGNMENT-STATEMENT OR-EXPRESSION									 
+			    				
+   OR-EXPRESSION -> AND-EXPRESSION |
+                    OR-EXPRESSION *or* AND-EXPRESSION
+ 
+   AND-EXPRESSION -> EQUAILITY-EXPRESSION | 
+                     AND-EXPRESSION *and* EQUALITY-EXPRESSION
+ 
+ 
+   EQUALITY-EXPRESSION ->  RELATIONAL-EXPRESSION| 
+                          EQUALITY-EXPRESSION *==* RELATIONAL-EXPRESSION |
+                          EQUALITY-EXPRESSION *!=* RELATIONAL-EXPRESSION
+
+
+   RELATIONAL-EXPRESSION -> DURING-OR-EXPRESSION |
+						   RELATIONAL-EXPRESSION RELOP DURING-OR-EXPRESSION
+
+   DURING-OR-EXPRESSION -> DURING-AND-EXPRESSION | 
+						 DURING-OR-EXPRESSION *;* DURING-AND-EXPRESSION
+						 
+   DURING-AND-EXPRESSION -> ADDITIVE-EXPRESSION |
+						   DURING-AND-EXPRESSION *during* ADDITIVE-EXPRESSION
+
+   ADDITIVE-EXPRESSION -> MULTIPLICATIVE-EXPRESSION |
+                          ADDITIVE-EXPRESSION *+* MULTIPLICATIVE-EXPRESSION |
+                          ADDITIVE-EXPRESSION *-* MULTIPLICATIVE-EXPRESSION
+
+   MULTIPLICATIVE-EXPRESSION -> PRIMARY-EXPRESSION |
+                                MULTIPLICATIVE-EXPRESSION *** PRIMARY-EXPRESSION |
+                		MULTIPLICATIVE-EXPRESSION */* PRIMARY-EXPRESSION
+
+   TO-EXPRESSION -> RELATIONAL-EXPRESSION |
+   		    TO-EXPRESSION *to* NOT-EXPRESSION
+
+
+   NOT-EXPRESSION -> PRIMARY-EXPRESSION |
+                     *not* NOT-EXPRESSION
+
+
+
+   PRIMARY-EXPRESSION -> CONSTANT |
+                         ID |
+                         STRING |
+                         ( OR-EXPRESSION ) |
+                         TEMPERATURE |
+                         DATE |
+                         DATETIME |
+                         TIME |
+                         MONTH |
+                         DAY |
+						 LIST-START |
+						 LIST-INDEX
+
+
+   LIST-OPERATION-EXPRESSION -> ID *[* OR-EXPRESSION *]*
+   
+   LOG-STATEMENT -> * log(* OR-EXPRESSION *)
+   
+   PARAMETER-LIST-START -> \epsilon |
+                           PARAMETER-LIST
+
+   PARAMETER-LIST -> PARAMETER-LIST | 
+                     PARAMETER-LIST *,* OR-EXPRESSION
+   
+   FUNCTION-PARAMETER-LIST -> \epsilon | FUNCTION-PARAMETER
+                              
+   FUNCTION-PARAMETER -> ID | FUNCTION-PARAMETER *,* FUNCTION-PARAMETER-END 
+   
+   FUNCTION-PARAMETER-END -> ID
+
+   ITERATION-STATEMENT -> *while (* OR-EXPRESSION *) :\n* STATEMENT-LIST
+
+   SELECTION-STATEMENT -> *if (* OR-EXPRESSION *) :\n* STATEMENT-LIST |
+                          *if (* OR-EXPRESSION *) :\n* STATEMENT-LIST *else: * STATEMENT-LIST
+   
+   PRINT-STATEMENT -> *print (* OR-EXPRESSION *)*
+   
+   FOR-STATEMENT -> *for* ID *in* OR-EXPRESSION *to* OR-EXPRESSION *: \n* STATEMENT-LIST |
+   		    *for* ID *in* LIST *: \n* STATEMENT-LIST
+   
+   
+   EVERY-STATEMENT -> *every (* DURING-OR-EXPRESSION *): \n*
+   
+   ONCE-EVERY-STATEMENT -> *once every (* DURING-OR-EXPRESION *): \n*
+   
+   RETURN-STATEMENT -> *return* | *return expression*
+  
+   MONTH ->  JANUARY |
+             FEBRUARY |
+             MARCH |
+             APRIL |
+             MAY |
+             JUNE |
+             JULY |
+             AUGUST |
+             SEPTEMBER |
+             OCTOBER |
+             NOVEMBER |
+             DECEMBER
+   
+   DAY -> MONDAY |
+          TUESDAY |
+          WEDNESDAY |
+          THURSDAY |
+          FRIDAY |
+          SATURDAY |
+          SUNDAY 
