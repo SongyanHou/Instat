@@ -9,7 +9,7 @@ def show(tag_name):
     media = []
     for tag_media in tag_recent_media:
         media.append(tag_media.get_standard_resolution_url())
-    show_image(media[0])
+    show_image(media[0], title='#'+tag_name)
     print media[0]
 
 if __name__ == '__main__':
