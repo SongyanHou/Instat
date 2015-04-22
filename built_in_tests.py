@@ -1,6 +1,5 @@
 import unittest
 import instat_built_in as instat
-import chart_function as chart
 
 
 class TestBuiltIn(unittest.TestCase):
@@ -11,13 +10,13 @@ class TestBuiltIn(unittest.TestCase):
         self.assertNotEqual(instat.search('helloworld'), None, 'search does not generate media')
 
     def test_barchart(self):
-        chart.barchart([1, 2, 3], [1, 2, 3])
+        instat.barchart([1, 2, 3], [1, 2, 3])
 
     def test_piechart(self):
-        chart.piechart([40, 10, 20, 30], ['Project', 'Homework', 'Midterm', 'Final'], 'PLT Grades')
+        instat.piechart([40, 10, 20, 30], ['Project', 'Homework', 'Midterm', 'Final'], 'PLT Grades')
 
     def test_linechart(self):
-        pass
+        instat.linechart([1, 2, 3], [1, 2, 3])
 
 if __name__ == '__main__':
     suite = unittest.TestLoader().loadTestsFromTestCase(TestBuiltIn)
