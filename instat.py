@@ -131,12 +131,12 @@ def p_statement_search_tag(p):
     search(tag_name=tag_name[1:])
 
 
-def p_expression_string(p):
+def p_string(p):
     'expression : STRING'
     p[0] = p[1][1:-1]
 
 
-def p_expression_number(p):
+def p_number(p):
     'expression : NUMBER'
     p[0] = p[1]
 

@@ -4,10 +4,17 @@ import logging
 
 class InstatLexer(object):
     reserved = {
+        'main': 'MAIN',
         'print': 'PRINT',
         'show': 'SHOW',
         'search': 'SEARCH',
+        'set': 'SET',
         'string': 'STRINGF',
+        'length': 'LENGTH',
+        'login': 'LOGIN',
+        'logout': 'LOGOUT',
+        'barchart': 'BARCHART',
+        'piechart': 'PIECHART',
         'from': 'FROM',
         'to': 'TO',
         'if': 'IF',
@@ -16,14 +23,7 @@ class InstatLexer(object):
         'while': 'WHILE',
         'for': 'FOR',
         'in': 'IN',
-        'length': 'LENGTH',
         'function': 'FUNCTION',
-        'barchart': 'BARCHART',
-        'piechart': 'PIECHART',
-        'login': 'LOGIN',
-        'logout': 'LOGOUT',
-        'main': 'MAIN',
-        'set': 'SET',
         'True': 'TRUE',
         'False': 'FALSE',
         'None': 'NONE'
@@ -34,13 +34,13 @@ class InstatLexer(object):
         'FLOAT',
         'BOOLEAN',
         'STRING',
+        'USER',
+        'LOCATION',
         'HASHTAG',
+        'DATE',
         'ID',
         'SEMICOLON',
         'NEWLINE',
-        'USER',
-        'LOCATION',
-        'DATE',
         'LPAREN',
         'RPAREN',
         'LBRACK',
@@ -62,7 +62,7 @@ class InstatLexer(object):
     tokens = unreserved_tokens + list(reserved.values())
 
     # Tokens
-    t_STRING = r'\"([^"]|\n)*\"'
+    t_STRING = r'\"[^"]|\n*\"'
     t_HASHTAG = r'\#[a-zA-Z0-9_][a-zA-Z0-9_]*'
     t_SEMICOLON = r';'
     t_LPAREN    = r'\('
@@ -77,9 +77,9 @@ class InstatLexer(object):
     t_COLON     = r':'
     t_MULTIPLY  = r'\*'
     t_DIVIDE    = r'/'
-    t_EQUIV     = r'(==)'
-    t_NONEQUIV  = r'(!=)'
-    t_RELOP     = r'(<=)|(>=)|(<)|(>)'
+    t_EQUIV     = r'=='
+    t_NONEQUIV  = r'!='
+    t_RELOP     = r'(<=)|(>=)|<|>'
     t_COMMA     = r','
 
     def __init__(self):
@@ -94,42 +94,6 @@ class InstatLexer(object):
         # Build the lexer
         self.lexer = lex.lex(module=self, debug=True, debuglog=log)
 
-    def t_FLOAT(self, t):
-        r'[-+]?\d+\.\d+'
-        try:
-            t.value = float(t.value)
-        except ValueError:
-            print "Float value too large", t.value
-        return t
-
-    def t_DATE(self, t):
-        r'[0-3]?[0-9]/[01]?[0-9]/[0-9]+[ ][01]?[0-9]:[0-5][0-9][ ]((AM)|(PM))'
-        return t
-
-    def t_USER(selt, t):
-        r'\@[a-zA-Z0-9_][a-zA-Z0-9_\.]*[a-zA-Z0-9_]'
-        t.value = t.value[1:]
-        return t
-
-    def t_LOCATION(self, t):
-        r'\@\('
-        t.value = None
-        return t
-
-    def t_NONE(self, t):
-        r'None'
-        t.value = None
-        return t
-
-    def t_INTEGER(self, t):
-        r'[-+]?\d+'
-        try:
-            t.value = int(t.value)
-        except ValueError:
-            print "Integer value too large", t.value
-            t.value = 0
-        return t
-
     def t_ID(self, t):
         r'[a-zA-Z_][a-zA-Z0-9_]*'
         t.type = InstatLexer.reserved.get(t.value, 'ID')    # Check for reserved words
@@ -141,6 +105,35 @@ class InstatLexer(object):
         if t.type == 'FALSE':
             t.value = False
             t.type = 'BOOLEAN'
+        return t
+
+    def t_DATE(self, t):
+        r'[0-3]?[0-9]/[01]?[0-9]/[0-9]+[ ][01]?[0-9]:[0-5][0-9][ ]((AM)|(PM))'
+        return t
+
+    def t_USER(selt, t):
+        r'\@[a-zA-Z0-9_][a-zA-Z0-9_\.]*[a-zA-Z0-9_]'
+        return t
+
+    def t_LOCATION(self, t):
+        r'\@\((\d+\.\d+), ?(\d+\.\d+)\)'
+        return t
+
+    def t_FLOAT(self, t):
+        r'[-+]?\d+\.\d+'
+        try:
+            t.value = float(t.value)
+        except ValueError:
+            print "Float value too large", t.value
+        return t
+
+    def t_INTEGER(self, t):
+        r'[-+]?\d+'
+        try:
+            t.value = int(t.value)
+        except ValueError:
+            print "Integer value too large", t.value
+            t.value = 0
         return t
 
     def t_COMMENT(self, t):
