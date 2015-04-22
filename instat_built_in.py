@@ -1,6 +1,6 @@
 __author__ = 'Jane'
 from instagram.client import InstagramAPI
-
+from show_function import show_image
 
 def show(tag_name):
     api = InstagramAPI(client_id='fae19a5f499c4aff820f71ce869e5579', client_secret='c3a8e0773e174a8caa2f785e9120d5b5')
@@ -9,8 +9,11 @@ def show(tag_name):
     media = []
     for tag_media in tag_recent_media:
         media.append(tag_media.get_standard_resolution_url())
+    show_image(media[0], title='#'+tag_name)
     print media[0]
 
+if __name__ == '__main__':
+    show("helloworld")
 
 def search(user=None, location=None, tag_name=None, start_time=None, end_time=None):
     api = InstagramAPI(client_id='fae19a5f499c4aff820f71ce869e5579', client_secret='c3a8e0773e174a8caa2f785e9120d5b5')
