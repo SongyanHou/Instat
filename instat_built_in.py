@@ -11,6 +11,7 @@ def show(tag_name):
         media.append(tag_media.get_standard_resolution_url())
     show_image(media[0], title='#'+tag_name)
     print media[0]
+    return media[0]
 
 if __name__ == '__main__':
     show("helloworld")
