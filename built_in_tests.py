@@ -1,22 +1,22 @@
 import unittest
-import instat_built_in
-import chart_function
+import instat_built_in as instat
+import chart_function as chart
 
 
 class TestBuiltIn(unittest.TestCase):
     def test_show(self):
-        pass
+        self.assertNotEqual(instat.show('helloworld'), None, 'show does not create a url')
 
     def test_search(self):
-        pass
+        self.assertNotEqual(instat.search('helloworld'), None, 'search does not generate media')
 
-    def test_print(self):
-        pass
+    def test_barchart(self):
+        chart.barchart([1, 2, 3], [1, 2, 3])
 
-    def test_length(self):
-        pass
+    def test_piechart(self):
+        chart.piechart([40, 10, 20, 30], ['Project', 'Homework', 'Midterm', 'Final'], 'PLT Grades')
 
-    def test_string(self):
+    def test_linechart(self):
         pass
 
 if __name__ == '__main__':
