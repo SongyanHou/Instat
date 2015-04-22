@@ -6,9 +6,9 @@ def barchart(data, ticks, title="Barchart"):
     fig = plt.figure()
     fig.canvas.set_window_title(title) 
     n = len(data)
-    x = np.arange(n)
+    x = [i+0.5 for i in range(n)]
     plt.bar(x, data, 1)
-    plt.xticks(x+0.5, [str(t) for t in ticks])
+    plt.xticks(x, [str(t) for t in ticks])
     plt.show()
 
 def piechart(data, labels, title="Piechart"):
