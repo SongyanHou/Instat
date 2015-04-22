@@ -71,6 +71,16 @@ class codeGenerator(object):
         if type(arg) is tuple:
             arg = arg[1]
         return str(arg)
+
+    def inBlock(self):
+        self.scopeDepth += 1
+        self.scopes.append([])
+
+    def outBlock(self):
+        for variable in self.scopes[self.scopeDepth]:
+            del self.symbolTable[variable]
+        del self.scopes[self.scopeDepth]
+        self.scopeDepth -= 1
         
     def _program(self, tree, flag=None):
         return self.dispatch(tree.children)
@@ -179,6 +189,33 @@ class codeGenerator(object):
         arg = self.dispatch(tree.children[0])
         funcname = arg.split("(")[0]
         return self.functionTable[funcname][1], arg
+
+    def _selection_statement(self, tree, flag=None):
+        condition = self.dispatch(tree.children[0])
+        if type(condition) is tuple:
+            condition = condition[1]
+        if len(tree.children) == 2:
+            s = "if(" + condition + "):\n"
+            self.inBlock()
+            lines = self.dispatch(tree.children[1]).splitlines()
+            for line in lines:
+                s+= "    " + line +"\n"
+            self.outBlock()
+            return s
+        else:
+            s = "if(" + condition + "):\n"
+            self.inBlock()
+            lines = self.dispatch(tree.children[1]).splitlines()
+            for line in lines:
+                s+= "    " + line +"\n"
+            self.outBlock()
+            s += "else:\n"
+            self.inBlock()
+            lines = self.dispatch(tree.children[2]).splitlines()
+            for line in lines:
+                s+= "    " + line +"\n"
+            self.outBlock()
+            return s
 
 
 class TypeError(Exception):
