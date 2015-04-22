@@ -1,6 +1,7 @@
 __author__ = 'Jane'
 from instagram.client import InstagramAPI
 from show_function import show_image
+from chart_function import *
 
 def show(tag_name):
     api = InstagramAPI(client_id='fae19a5f499c4aff820f71ce869e5579', client_secret='c3a8e0773e174a8caa2f785e9120d5b5')
@@ -11,9 +12,6 @@ def show(tag_name):
         media.append(tag_media.get_standard_resolution_url())
     show_image(media[0], title='#'+tag_name)
     print media[0]
-
-if __name__ == '__main__':
-    show("helloworld")
 
 def search(user=None, location=None, tag_name=None, start_time=None, end_time=None):
     api = InstagramAPI(client_id='fae19a5f499c4aff820f71ce869e5579', client_secret='c3a8e0773e174a8caa2f785e9120d5b5')
@@ -49,3 +47,17 @@ def search(user=None, location=None, tag_name=None, start_time=None, end_time=No
             else:
                 media = media & tag_set
     return media
+
+def linechart(data, label, title = 'A Linechart'):
+    make_chart(style='line', args = (data,label,title))
+
+def barchart(data, label, title = 'A Barchart'):
+    make_chart(style='bar', args = (data,label,title))
+
+def piechart(data, label, title = 'A Piechart'):
+    make_chart(style='pie', args = (data,label,title))
+
+if __name__ == '__main__':
+    # show("helloworld")
+    data = [1,2,3,4,5]
+    piechart(data,data)
