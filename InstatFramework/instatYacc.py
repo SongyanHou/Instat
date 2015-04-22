@@ -165,6 +165,20 @@ def p_primary_expression_constant(p):
     """
     p[0] = Node('primary_expression_constant', [], p[1])
 
+
+#need to add elif
+def p_selection_statement(p):
+    """ selection_statement : IF or_expression LBRACK statement_list RBRACK
+                            | IF or_expression LBRACK statement_list RBRACK ELSE LBRACK statement_list RBRACK
+                            | IF or_expression LBRACK statement_list RBRACK ELIF or_expression LBRACK ei_statement_list RBRACK ELSE LBRACK statement_list RBRACK
+    """
+    if len(p) == 5:
+        p[0] = Node("selection_statement", [p[2], p[4]])
+    elif len(p) == 9:
+        p[0] = Node("selection_statement", [p[2], p[4], p[8]]) #i dont know if this is even right
+    else:
+        p[0] = Node("selection_statement", [p[2], p[4], p[7], p[9], p[13]])
+
 # Error rule for syntax errors
 def p_error(p):    
     if hasattr(p, 'lineno'):
