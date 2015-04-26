@@ -4,46 +4,41 @@ import re
 
 # List of token names.   This is always required
 reserved = {
-    #types
-    'number' : 'TNUMBER',
-    'time' : 'TTIME',
-    'datetime' : 'TDATETIME',
-    'boolean' : 'TBOOLEAN',
-    'day' : 'TDAY',
-    'month' : 'TMONTH',
-    'date' : 'TDATE',
-    'dayrange' : 'TDAYRANGE',
-    'monthrange' : 'TMONTHRANGE',
-    'daterange' : 'TDATERANGE',
-    'timerange' : 'TTIMERANGE',
-    'string' : 'TSTRING',
-    'list' : 'TLIST',
-    # Other
-    'def' : 'DEF',
-    'to' : 'TO',
+	'main': 'MAIN',
+    'print': 'PRINT',
+    'show': 'SHOW',
+    'search': 'SEARCH',
+    'set': 'SET',
+    'string': 'STRINGF',
+    'length': 'LENGTH',
+    'login': 'LOGIN',
+    'logout': 'LOGOUT',
+    'barchart': 'BARCHART',
+    'piechart': 'PIECHART',
+    'from': 'FROM',
+    'to': 'TO',
+    'if': 'IF',
+    'else': 'ELSE',
+    'elif': 'ELIF',
+    'while': 'WHILE',
+    'for': 'FOR',
+    'in': 'IN',
+    'function': 'FUNCTION',
+    'True': 'TRUE',
+    'False': 'FALSE',
+    'None': 'NONE',
     'or' : 'OR',
     'and' : 'AND',
-    'if' : 'IF',
-    'else' : 'ELSE',
-    'add' : 'ADD',
-    'remove' : 'REMOVE',
-    'sort' : 'SORT',
-    #'elif' : 'ELSEIF',
-    'while' : 'WHILE',
-    'for' : 'FOR',
-    'in' : 'IN', 
-    'print' : 'PRINT',
     'not' : 'NOT',
-    'to' : 'TO',
-    'each' : 'EACH',
-    'during' : 'DURING',
-    'true' : 'TRUE',
-    'false' : 'FALSE',
-    'power' : 'POWER',
-    'return' : 'RETURN',
     }
 
 tokens = [
+	'INTEGER',
+    'FLOAT',
+    'BOOLEAN',
+    'USER',
+    'LOCATION',
+    'HASHTAG',
     'LPAREN',
     'RPAREN',
     'RBRACK',
@@ -56,16 +51,7 @@ tokens = [
     'ID',
     'SEMICOLON',
     'COLON',
-    'CONSTANT',
     'DATE',
-    'TIME',
-    'DATETIME',
-    'DAYS',
-    'MONTHS',
-    'YEARS',
-    'HOURS',
-    'MINUTES',
-    'TEMPERATURE',
     'MULTIPLY',
     'DIVIDE',
     'EQUIV',
@@ -77,10 +63,11 @@ tokens = [
     'NEWLINE',
     'COMMA',
     'STRING',
-    'FORRANGE',
 ] + list(reserved.values())
 
 # Regular expression rules for simple tokens
+t_STRING 	= r'\"([^"]|\n)*\"'
+t_HASHTAG 	= r'\#[a-zA-Z0-9_][a-zA-Z0-9_]*'
 t_LPAREN    = r'\('
 t_RPAREN    = r'\)'
 t_LBRACK    = r'\{'
@@ -89,7 +76,7 @@ t_LBRACE    = r'\['
 t_RBRACE    = r'\]'
 t_EQUALS    = r'='
 t_PLUS      = r'\+'
-t_MINUS     = r'\-'
+t_MINUS 	= r'\-'
 t_SEMICOLON = r';'
 t_COLON     = r':'
 t_MULTIPLY  = r'\*'
@@ -98,40 +85,50 @@ t_EQUIV     = r'(==)'
 t_NONEQUIV  = r'(!=)'
 t_RELOP     = r'(<=)|(>=)|(<)|(>)'
 t_COMMA     = r'(,)'
-t_FORRANGE = r'\s*\.\.\.\s*'
-t_POWER     = r'\^'
+
 # A regular expression rule with some action code
 
-def t_DATETIME(t):
+def t_DATE(t):
     r'[0-3]?[0-9]/[01]?[0-9]/[0-9]+[ ][01]?[0-9]:[0-5][0-9][ ]((AM)|(PM))'
     return t
 
-def t_DATE(t):
-    r'[0-3]?[0-9]/[01]?[0-9]/[0-9]+'
-    return t
-    
-def t_DAYS(t):
-    r'[0-9]+[ ]Days'
-    return t
-def t_MONTHS(t):
-    r'[0-9]+[ ]Months'
-    return t
-def t_YEARS(t):
-    r'[0-9]+[ ]Years'
-    return t
-
-def t_STRING(t):
-    r'\"([^"]|\n)*\"'
-    return t
-
-def t_CONSTANT(t):
-    r'[0-9]*\.?[0-9]+|((\'|\").*?(\'|\"))'
-    return t
-
 def t_ID(t):
-    r'[a-zA-Z_][a-zA-Z_0-9]*'
-    t.type = reserved.get(t.value, 'ID') #looks in reserved list, if can't find, assigns it to type ID 
+    r'[a-zA-Z_][a-zA-Z0-9_]*'
+    t.type = reserved.get(t.value, 'ID')    # Check for reserved words
+    if t.type == 'NONE':
+        t.value = None
+    if t.type == 'TRUE':
+        t.value = True
+        t.type = 'BOOLEAN'
+    if t.type == 'FALSE':
+        t.value = False
+        t.type = 'BOOLEAN'
     return t
+
+def t_USER(t):
+    r'\@[a-zA-Z0-9_][a-zA-Z0-9_\.]*[a-zA-Z0-9_]'
+    return t
+
+def t_LOCATION(t):
+    r'\@\((\d+\.\d+), ?(\d+\.\d+)\)'
+    return t
+
+def t_FLOAT(t):
+    r'\d+\.\d+'
+    return t
+
+def t_INTEGER(t):
+    r'\d+'
+    try:
+        t.value = int(t.value)
+    except ValueError:
+        print "Integer value too large", t.value
+        t.value = 0
+    return t
+
+def t_COMMENT(t):
+    r'(/\*(.|\n)*?\*/)|(//.*)'
+    pass
 
 
 # Define a rule so we can track line numbers
@@ -150,7 +147,7 @@ def t_WS(t):
 
 
 # A string containing ignored characters (spaces and tabs)
-t_ignore_COMMENT = r'\#.*'
+t_ignore = ' \t'
 
 # Error handling rule
 def t_error(t):
