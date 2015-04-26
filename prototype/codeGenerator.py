@@ -202,22 +202,43 @@ class codeGenerator(object):
         
         if len(tree.children) == 1:
             return self.dispatch(tree.children[0],flag)
+        else:
+            (operand1, operand2, type1, type2) = self.get_types(tree.children[0], tree.children[1], flag)
+
+            if type1 != type2:
+                exit("TypeError! Cannot compare objects of type " + type1 + " and objects of type " + type2)
+
+            return "BOOLEAN", str(operand1[1]) + " " + tree.children[2] + " " + str(operand2[1])
 
     def _relational_expression(self, tree, flag=None):
         
         if len(tree.children) == 1:
             return self.dispatch(tree.children[0], flag) 
+        else:
+
+            (operand1, operand2, type1, type2) = self.get_types(tree.children[0], tree.children[1], flag)
+
+            if type1 != type2:
+                exit("TypeError! Can not use relop between type " + type1 + " and " + type2)
+
+            return type1, str(operand1[1]) + " " + tree.children[2] + " " + str(operand2[1])
 
     def _additive_expression(self, tree, flag=None):
         
         if len(tree.children) == 1:
             return self.dispatch(tree.children[0], flag)
+        else:
+            
+            (operand1, operand2, type1, type2) = self.get_types(tree.children[0], tree.children[1], flag)
+            return type1, str(operand1[1]) + " " + tree.children[2] + " " + str(operand2[1])
 
     def _multiplicative_expression(self, tree, flag=None):
         
         if len(tree.children) == 1:
             return self.dispatch(tree.children[0], flag) 
-
+        else:          
+            (operand1, operand2, type1, type2) = self.get_types(tree.children[0], tree.children[1], flag)
+            return type1, str(operand1[1]) + " " + tree.children[2] + " " + str(operand2[1])
 
     def _to_expression(self, tree, flag=None):
         if len(tree.children) == 1:
@@ -273,6 +294,14 @@ class codeGenerator(object):
             arg = str(arg)
         s = "print " + arg
         return s
+
+    def get_types(self, children1, children2, flag=None):
+            operand1 = self.dispatch(children1, flag)
+            operand2 = self.dispatch(children2, flag)
+            type1 = operand1[0]
+            type2 = operand2[0]
+
+            return operand1, operand2, type1, type2
 
 class TypeError(Exception):
     def __init__(self, value):

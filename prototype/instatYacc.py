@@ -114,14 +114,17 @@ def p_and_expression(p):
         p[0] = Node("and_expression", [p[1], p[3], p[2]])
 
 def p_equality_expression(p):
-    """ equality_expression : relational_expression"""
+    """ equality_expression : relational_expression
+                            | equality_expression EQUIV relational_expression 
+                            | equality_expression NONEQUIV relational_expression"""
     if len(p) == 2:
         p[0] = Node("equality_expression", [p[1]])
     else:
         p[0] = Node("equality_expression", [p[1], p[3], p[2]])
 
 def p_relational_expression(p):
-    """ relational_expression : during_or_expression"""
+    """ relational_expression : during_or_expression
+                              | relational_expression RELOP during_or_expression"""
     if len(p) == 2:
         p[0] = Node("relational_expression", [p[1]])
     else:
@@ -152,6 +155,8 @@ def p_during_and_expression(p):
         
 def p_additive_expression(p):
     """ additive_expression : multiplicative_expression
+                            | additive_expression PLUS multiplicative_expression
+                            | additive_expression MINUS multiplicative_expression
     """
     if len(p) == 2:
         p[0] = Node("additive_expression", [p[1]])
@@ -161,6 +166,8 @@ def p_additive_expression(p):
 # Change to continue sequence in grammar i.e. function_expression, etc
 def p_multiplicative_expression(p):
     """ multiplicative_expression : power_expression
+                                  | multiplicative_expression MULTIPLY power_expression
+                                  | multiplicative_expression DIVIDE power_expression
     """
     if len(p) == 2:
         p[0] = Node("multiplicative_expression", [p[1]])
