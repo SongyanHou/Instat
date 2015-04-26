@@ -4,7 +4,7 @@ import re
 
 # List of token names.   This is always required
 reserved = {
-	'main': 'MAIN',
+    'main': 'MAIN',
     'print': 'PRINT',
     'show': 'SHOW',
     'search': 'SEARCH',
@@ -33,7 +33,7 @@ reserved = {
     }
 
 tokens = [
-	'INTEGER',
+    'INTEGER',
     'FLOAT',
     'BOOLEAN',
     'USER',
