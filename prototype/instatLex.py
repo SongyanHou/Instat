@@ -95,7 +95,7 @@ class InstatLexer(object):
 
     def t_ID(self, t):
         r'[a-zA-Z_][a-zA-Z0-9_]*'
-        t.type = reserved.get(t.value, 'ID')    # Check for reserved words
+        t.type = InstatLexer.reserved.get(t.value, 'ID')    # Check for reserved words
         if t.type == 'NONE':
             t.value = None
         if t.type == 'TRUE':
