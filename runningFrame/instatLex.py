@@ -28,7 +28,7 @@ reserved = {
     'add' : 'ADD',
     'remove' : 'REMOVE',
     'sort' : 'SORT',
-    #'elif' : 'ELSEIF',
+    'elif' : 'ELSEIF',
     'while' : 'WHILE',
     'for' : 'FOR',
     'in' : 'IN', 
@@ -73,8 +73,8 @@ tokens = [
     'RELOP',
     'INDENT',
     'DEDENT',
-    'WS',
-    'NEWLINE',
+    #'WS',
+    #'NEWLINE',
     'COMMA',
     'STRING',
     'FORRANGE',
@@ -138,19 +138,23 @@ def t_ID(t):
 def t_newline(t):
     r'\n+'
     t.lexer.lineno += len(t.value)
-    t.type = "NEWLINE"
-    if t.lexer.paren_count == 0:
-        return t
+    #t.type = "NEWLINE"
+    #if t.lexer.paren_count == 0:
+    #    return t
 
 # Whitespace
-def t_WS(t):
-    r' [ ]+ '
-    if t.lexer.at_line_start and t.lexer.paren_count == 0:
-        return t
+#def t_WS(t):
+#    r' [ ]+ '
+#    if t.lexer.at_line_start and t.lexer.paren_count == 0:
+#        return t
 
 
 # A string containing ignored characters (spaces and tabs)
-t_ignore_COMMENT = r'\#.*'
+def t_COMMENT(t):
+    r'(/\*(.|\n)*?\*/)|(//.*)'
+    pass
+
+t_ignore = ' \t'
 
 # Error handling rule
 def t_error(t):
@@ -262,6 +266,9 @@ if __name__ == '__main__':
     # code
     #this doesnt work RGGGGGG
     data = """
+    if else elif 
+
+    ID new while for in 
 """
 
     # Give the lexer some input
