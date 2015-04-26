@@ -31,7 +31,7 @@ class InstatLexer(object):
         'or' : 'OR',
         'and' : 'AND',
         'not' : 'NOT',
-        }
+    }
 
     tokens = [
         'INTEGER',
