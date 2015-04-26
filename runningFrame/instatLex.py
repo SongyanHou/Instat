@@ -269,6 +269,11 @@ if __name__ == '__main__':
     if else elif 
 
     ID new while for in 
+
+    /* comment */
+    //comment
+
+    while
 """
 
     # Give the lexer some input
