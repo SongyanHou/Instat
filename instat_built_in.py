@@ -12,6 +12,7 @@ def show(tag_name):
         media.append(tag_media.get_standard_resolution_url())
     show_image(media[0], title='#'+tag_name)
     print media[0]
+    return media[0]
 
 def search(user=None, location=None, tag_name=None, start_time=None, end_time=None):
     api = InstagramAPI(client_id='fae19a5f499c4aff820f71ce869e5579', client_secret='c3a8e0773e174a8caa2f785e9120d5b5')
