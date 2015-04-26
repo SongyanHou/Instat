@@ -83,10 +83,10 @@ def p_for_statement(p):
     #print p[0]
 
 def p_iteration_statement(p):
-    """ iteration_statement : WHILE LPAREN or_expression RPAREN COLON  LBRACK statement RBRACK
+    """ iteration_statement : WHILE or_expression LBRACK statement_list RBRACK
     """
-    p[0] = Node("iteration_statement", [p[3], p[8]])
-    print p[0]
+    p[0] = Node("iteration_statement", [p[2], p[4]])
+    #print p[0]
 
 def p_selection_statement(p):
     """ selection_statement : IF or_expression LBRACK statement_list RBRACK

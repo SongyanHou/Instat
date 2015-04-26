@@ -1,4 +1,4 @@
-if false
+if true
 {
 	print("If statement true");
 	print("Another statement");
@@ -10,3 +10,9 @@ else
 }
 
 print ("If statement true");
+
+while false {
+	print ("while loop");
+	i = 1;
+	print ("another while loop");
+}
