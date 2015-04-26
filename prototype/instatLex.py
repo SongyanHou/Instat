@@ -4,7 +4,7 @@ import re
 
 # List of token names.   This is always required
 reserved = {
-	'main': 'MAIN',
+    'main': 'MAIN',
     'print': 'PRINT',
     'show': 'SHOW',
     'search': 'SEARCH',
@@ -33,7 +33,7 @@ reserved = {
     }
 
 tokens = [
-	'INTEGER',
+    'INTEGER',
     'FLOAT',
     'BOOLEAN',
     'USER',
@@ -66,8 +66,8 @@ tokens = [
 ] + list(reserved.values())
 
 # Regular expression rules for simple tokens
-t_STRING 	= r'\"([^"]|\n)*\"'
-t_HASHTAG 	= r'\#[a-zA-Z0-9_][a-zA-Z0-9_]*'
+t_STRING    = r'\"([^"]|\n)*\"'
+t_HASHTAG   = r'\#[a-zA-Z0-9_][a-zA-Z0-9_]*'
 t_LPAREN    = r'\('
 t_RPAREN    = r'\)'
 t_LBRACK    = r'\{'
@@ -76,7 +76,7 @@ t_LBRACE    = r'\['
 t_RBRACE    = r'\]'
 t_EQUALS    = r'='
 t_PLUS      = r'\+'
-t_MINUS 	= r'\-'
+t_MINUS     = r'\-'
 t_SEMICOLON = r';'
 t_COLON     = r':'
 t_MULTIPLY  = r'\*'
