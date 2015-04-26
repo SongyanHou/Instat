@@ -4,7 +4,7 @@ import re
 
 # List of token names.   This is always required
 reserved = {
-    'main': 'MAIN',
+	'main': 'MAIN',
     'print': 'PRINT',
     'show': 'SHOW',
     'search': 'SEARCH',
@@ -33,7 +33,7 @@ reserved = {
     }
 
 tokens = [
-    'INTEGER',
+	'INTEGER',
     'FLOAT',
     'BOOLEAN',
     'USER',
@@ -115,6 +115,11 @@ def t_LOCATION(t):
 
 def t_FLOAT(t):
     r'\d+\.\d+'
+    try:
+    	t.value = float(t.value)
+    except ValueError:
+    	print "Flaot value error", t.value
+    	t.value = 0.0;
     return t
 
 def t_INTEGER(t):
@@ -138,13 +143,6 @@ def t_newline(t):
     t.type = "NEWLINE"
     if t.lexer.paren_count == 0:
         return t
-
-# Whitespace
-def t_WS(t):
-    r' [ ]+ '
-    if t.lexer.at_line_start and t.lexer.paren_count == 0:
-        return t
-
 
 # A string containing ignored characters (spaces and tabs)
 t_ignore = ' \t'
