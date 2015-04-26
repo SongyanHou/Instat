@@ -3,7 +3,7 @@
 
 tablestack = [{},]
 
-def add_entry(symbol, attributes):
+def update_entry(symbol, attributes):
     global tablestack
     tablestack[-1][symbol] = attributes
 
