@@ -12,17 +12,17 @@ def module_exists(module_name):
         return False
     else:
         return True
-
-if module_exists("RPi.GPIO"):
-    thermoStat = '''
-from r_pi import ThermoStat
-myThermoStat = ThermoStat.Sim_ThermoStat()
-'''
-else:
-    thermoStat = '''
-from r_pi import Fake_ThermoStat
-myThermoStat = Fake_ThermoStat.Fake_ThermoStat()   
-'''
+#
+#if module_exists("RPi.GPIO"):
+#    thermoStat = '''
+#from r_pi import ThermoStat
+#myThermoStat = ThermoStat.Sim_ThermoStat()
+#'''
+#else:
+#    thermoStat = '''
+#from r_pi import Fake_ThermoStat
+#myThermoStat = Fake_ThermoStat.Fake_ThermoStat()   
+#'''
 
 
 
@@ -40,7 +40,7 @@ class codeGenerator(object):
         # Variable to store the code
         self.ret = "import datetime\n" 
         self.ret += "import sys\n"
-        self.ret += "every_list = []\n" + "log_file = open('instatLog.txt', 'a')\n"  + thermoStat
+        #self.ret += "every_list = []\n" + "log_file = open('instatLog.txt', 'a')\n"  + thermoStat
         self.ret += "print \"Welcome to instat \\n==================== \"\n"
         body = self.dispatch(tree)
         self.ret += runtimeError.errorBeginning(body)
@@ -88,6 +88,8 @@ class codeGenerator(object):
     def _external_declaration(self, tree, flag=None):
         return self.dispatch(tree.children)
 
+    def _statement_list(self, tree, flag=None):
+        return self.dispatch(tree.children)
 
     def _statement(self, tree, flag=None):
         return self.dispatch(tree.children) + "\n"
@@ -95,7 +97,9 @@ class codeGenerator(object):
 
     #whoever wrote this, please have a look at _assignnment_statement_list_index
     def _assignment_statement(self, tree, flag=None):
+        print tree.children[0]
         arg = self.dispatch(tree.children[0]);
+        #print arg;
         scpDepth = 0
         for scpDepth in range(0, self.scopeDepth + 1):
             if tree.leaf + "__" + str(scpDepth) + "__" in self.symbolTable:
@@ -115,6 +119,75 @@ class codeGenerator(object):
             string += "global " + tree.leaf + "\n"
         string += tree.leaf + " = " + arg
         return string
+
+    def _for_statement(self, tree, flag=None):
+        #for iterator in a range
+        or_expression1 = self.dispatch(tree.children[0])
+        or_expression2 = self.dispatch(tree.children[1])
+        the_id = tree.leaf
+        self.symbolTable[tree.leaf] = ["NUM", None] #this might be bad because it just holds a dummy variable but we'll deal
+        
+        if type(or_expression1) is tuple: or_expression1 = or_expression1[1]
+        if type(or_expression2) is tuple: or_expression2 = or_expression2[1]
+        if type(or_expression1) is float: or_expression1 = str(int(or_expression1))
+        if type(or_expression2) is float: or_expression2 = str(int(or_expression2))
+        
+        s = "for " + the_id + " in range( " + or_expression1 + " , " + or_expression2 + " + 1 ) : \n"
+        self.inBlock()
+        lines = self.dispatch(tree.children[2]).splitlines()
+
+        for line in lines:
+            s+= "    " + line +"\n"
+        self.outBlock()
+        return s
+
+    def _iteration_statement(self, tree, flag=None):
+        condition = self.dispatch(tree.children[0])
+        if type(condition) is tuple:
+            condition = condition[1]
+        
+        #s = "while(" + self.dispatch(tree.children[0]) + "):\n"
+        s = "while(" + condition + "):\n"
+        self.inBlock()
+        lines = self.dispatch(tree.children[1]).splitlines()
+
+        for line in lines:
+            s+= "    " + line +"\n"
+        self.outBlock()
+        return s
+
+    def _selection_statement(self, tree, flag=None):
+        condition = self.dispatch(tree.children[0])
+        if type(condition) is tuple:
+            condition = condition[1]
+        if len(tree.children) == 2:
+            s = "if(" + condition + "):\n"
+            self.inBlock()
+            lines = self.dispatch(tree.children[1]).splitlines()
+            for line in lines:
+                s+= "    " + line +"\n"
+            self.outBlock()
+            return s
+        else:
+            s = "if(" + condition + "):\n"
+            self.inBlock()
+            lines = self.dispatch(tree.children[1]).splitlines()
+            for line in lines:
+                s+= "    " + line +"\n"
+            self.outBlock()
+            s += "else:\n"
+            self.inBlock()
+            lines = self.dispatch(tree.children[2]).splitlines()
+            for line in lines:
+                s+= "    " + line +"\n"
+            self.outBlock()
+            return s
+
+    def _primary_expression_boolean(self, tree, flag=None):
+        return "BOOLEAN", str(tree.leaf).title()
+
+    def _primary_expression_string(self, tree, flag=None):
+        return "STRING", tree.leaf
 
     def _or_expression(self, tree, flag=None):
         
@@ -190,33 +263,18 @@ class codeGenerator(object):
         funcname = arg.split("(")[0]
         return self.functionTable[funcname][1], arg
 
-    def _selection_statement(self, tree, flag=None):
-        condition = self.dispatch(tree.children[0])
-        if type(condition) is tuple:
-            condition = condition[1]
-        if len(tree.children) == 2:
-            s = "if(" + condition + "):\n"
-            self.inBlock()
-            lines = self.dispatch(tree.children[1]).splitlines()
-            for line in lines:
-                s+= "    " + line +"\n"
-            self.outBlock()
-            return s
-        else:
-            s = "if(" + condition + "):\n"
-            self.inBlock()
-            lines = self.dispatch(tree.children[1]).splitlines()
-            for line in lines:
-                s+= "    " + line +"\n"
-            self.outBlock()
-            s += "else:\n"
-            self.inBlock()
-            lines = self.dispatch(tree.children[2]).splitlines()
-            for line in lines:
-                s+= "    " + line +"\n"
-            self.outBlock()
-            return s
-
+    def _print_statement(self, tree, flag=None):
+        arg = self.dispatch(tree.children[0])
+        if type(arg) is tuple:
+            if arg[0] == "TIME":
+                arg = "(" + arg[1] + ").time()"
+            else:
+                arg = arg[1]
+        
+        if type(arg) is int or type(arg) is float:
+            arg = str(arg)
+        s = "print " + arg
+        return s
 
 class TypeError(Exception):
     def __init__(self, value):

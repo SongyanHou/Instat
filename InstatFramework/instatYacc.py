@@ -53,19 +53,61 @@ def p_external_declaration(p):
     """ external_declaration : statement"""
     p[0] = Node("external_declaration", [p[1]])
 
+
+def p_statement_list(p):
+    """ statement_list : statement
+                       | statement_list statement
+    """
+    if len(p) == 2:
+        p[0] = Node("statement_list", [p[1]])
+    else:
+        p[0] = Node("statement_list", [p[1], p[2]])
+
 # Add types of statements here, e.g. selection, iteration, etc!
 def p_statement(p):
-    """ statement : assignment_statement NEWLINE
+    """ statement : assignment_statement SEMICOLON
+                  | print_statement SEMICOLON
+                  | for_statement 
+                  | iteration_statement 
+                  | selection_statement 
+                  | statement
     """
     #maybe add | list_change NEWLINE
     p[0] = Node("statement", [p[1]])
+    #print p[0]
 
+def p_for_statement(p):
+    """ for_statement : FOR ID IN or_expression TO or_expression COLON  LBRACK statement RBRACK
+    """
+    p[0] = Node("for_statement", [p[4], p[6], p[10]], p[2])
+    #print p[0]
+
+def p_iteration_statement(p):
+    """ iteration_statement : WHILE LPAREN or_expression RPAREN COLON  LBRACK statement RBRACK
+    """
+    p[0] = Node("iteration_statement", [p[3], p[8]])
+    print p[0]
+
+def p_selection_statement(p):
+    """ selection_statement : IF or_expression LBRACK statement_list RBRACK
+                            | IF or_expression LBRACK statement_list RBRACK ELSE LBRACK statement_list RBRACK
+    """
+    if len(p) == 5:
+        p[0] = Node("selection_statement", [p[2], p[4]])
+    else:
+        p[0] = Node("selection_statement", [p[2], p[4], p[8]]) #i dont know if this is even right
+
+
+def p_print_statement(p):
+    """ print_statement : PRINT LPAREN or_expression RPAREN
+    """
+    p[0] = Node("print_statement", [p[3]])
 
 # is this correct?? need to fix according to grammar... Remember to fix the one below it too!
 def p_assignment_statement(p):
     """ assignment_statement : ID EQUALS or_expression"""
     
-    p[0] = Node("assignment_statement", [p[3]], p[1])  
+    p[0] = Node("assignment_statement", [p[3]], p[1])
 
 def p_or_expression(p):
     """ or_expression : and_expression"""
@@ -160,24 +202,21 @@ def p_primary_expression(p):
     else:
         p[0] = Node('primary_expression', [p[2]])    
 
+
+def p_primary_expression_boolean(p):
+    """ primary_expression : TRUE
+                            | FALSE"""
+    p[0] = Node('primary_expression_boolean', [], p[1])
+
+def p_primary_expression_string(p):
+    """ primary_expression : STRING
+    """
+    p[0] = Node('primary_expression_string', [], p[1])
+
 def p_primary_expression_constant(p):
     """ primary_expression : CONSTANT
     """
     p[0] = Node('primary_expression_constant', [], p[1])
-
-
-#need to add elif
-def p_selection_statement(p):
-    """ selection_statement : IF or_expression LBRACK statement_list RBRACK
-                            | IF or_expression LBRACK statement_list RBRACK ELSE LBRACK statement_list RBRACK
-                            | IF or_expression LBRACK statement_list RBRACK ELIF or_expression LBRACK ei_statement_list RBRACK ELSE LBRACK statement_list RBRACK
-    """
-    if len(p) == 5:
-        p[0] = Node("selection_statement", [p[2], p[4]])
-    elif len(p) == 9:
-        p[0] = Node("selection_statement", [p[2], p[4], p[8]]) #i dont know if this is even right
-    else:
-        p[0] = Node("selection_statement", [p[2], p[4], p[7], p[9], p[13]])
 
 # Error rule for syntax errors
 def p_error(p):    
