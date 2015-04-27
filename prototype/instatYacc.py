@@ -1,5 +1,4 @@
 import ply.yacc as yacc
-from compiler import ast, misc
 
 precedence = (
     ('left', 'PLUS', 'MINUS'),
@@ -222,10 +221,10 @@ def p_error(p):
         sys.exit("Syntax error in input!")
     
 # wrap default parser into instat parser
-class instatParser(object):
+class InstatParser(object):
     def __init__(self, lexer = None):
         if lexer is None:
-            lexer = instatLexer()
+            lexer = InstatLexer()
         self.lexer = lexer
         self.parser = yacc.yacc()
 
