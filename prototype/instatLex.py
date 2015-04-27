@@ -16,6 +16,7 @@ class InstatLexer(object):
         'logout': 'LOGOUT',
         'barchart': 'BARCHART',
         'piechart': 'PIECHART',
+        'linechart': 'LINECHART',
         'from': 'FROM',
         'to': 'TO',
         'if': 'IF',
@@ -28,9 +29,9 @@ class InstatLexer(object):
         'True': 'TRUE',
         'False': 'FALSE',
         'None': 'NONE',
-        'or' : 'OR',
-        'and' : 'AND',
-        'not' : 'NOT',
+        'or': 'OR',
+        'and': 'AND',
+        'not': 'NOT'
     }
 
     tokens = [
